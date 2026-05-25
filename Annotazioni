@@ -1,0 +1,8 @@
+Per domani 25/05/2026
+
+- configurare il file .gitignore in locale
+- eseguire il primo commit e il primo push
+- completare la configurazione git/githut/VPS con l'attivazione della action e del runner con il file workflow/deploy.yml
+- sistemare il dokcerfile con myslq/phpmyadmin al posto di monog db
+- configurare il DB magazzino con la tabella Utenti
+- implementare la configurazione di Auth.js ( cercare di capire come impostare l'autenticazione: con Google, con Github o qualche altro provider?)

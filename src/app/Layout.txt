@@ -1,0 +1,16 @@
+Layout.tsx:
+
+Tutto quello che è presente nel Layout di root, viene poi "trasportato" a cascata in tutta l'applicazione e quindi in
+tutte le altre pagine.
+In qualsiasi pagina mi sposto, tutto quello che è presente nel layout di root viene portato nelle altre pagine.
+Possiamo avere più layout.
+In qualsiasi cartella raggruppata, ma anche nelle cartelle delle pagine, posso creare un layout.
+Possiamo aver quindi il ContentLayout.tsx, il MarketingLayout.tsx etc...
+L'importante è che il nome sia in minuscolo perché in Next.js le convenzioni 
+file-based sono  case-sensitive per i nome speciali: layout, page.tsx, loading.tsx, not-found.tsx.
+Ogni pagina potenzialmente può aver il suo layout. Se andiamo a mettere qualcosa nel layout di root però, questa 
+viene portata in tutte le altre pagine.
+In realtà una cosa che si fa spesso e volentieri è creare un layout per i raggruppamenti: (content), (marekting) e (main). Questi raggruppamenti al di là della questione logica di andare a raggruppare in modo logico, viene fatto per creare un layout specifici. Possono essere server side o client side e quindi possono fetchare dati e mantengono lo stato navigando tra le routes: ciò significa che se posso forzare un redirect verso un'altra pagina.
+
+
+
