@@ -42,8 +42,9 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             echo "START DEPLOY"
-            cd /root/magricambi
+            cd /root/magricambi/magricambi
             pwd
             ls -la
-            git pull
+            git pull --ff-only
+            cd /root/magricambi
             docker compose up -d --build
