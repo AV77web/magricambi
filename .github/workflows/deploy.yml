@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-          cache-dependency-path: app/package-lock.json
+          cache-dependency-path: magricambi/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -45,7 +45,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             echo "START DEPLOY"
-            cd /root/app
+            cd /root/magricambi
             pwd
             ls -la
             git pull
