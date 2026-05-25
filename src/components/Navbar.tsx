@@ -5,8 +5,6 @@
 // @version: "1.0.0 2026-05-07"
 //====================================
 
-
-
 export default function Navbar() {
     return (
         <>
