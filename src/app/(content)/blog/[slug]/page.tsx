@@ -1,3 +1,4 @@
+// [slug]/page.tsx
 interface Post {
   slug: string;
   title: string;
