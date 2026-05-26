@@ -2004,3 +2004,1671 @@ https://github.com/AV77web/magricambi1/actions
 ---
 
 **Nota:** `magricambi` e `magricambi1` sono due repo diversi. Il `deploy.yml` che hai in locale è su **magricambi1**; se fai push solo su `magricambi`, lì potrebbe non esserci workflow o Actions diverse.
+
+---
+
+_**User**_
+
+ora sono in magricambi non più magricambi1 ma le actions non sembarno essere eseguite mentre il  commit funzionano correttamente
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user switched from the magricambi1 repository to the magricambi repository on GitHub.</details></think>
+
+_**Agent (default)**_
+
+I commit arrivano su `magricambi`, ma le Actions partono solo se il workflow è su quel repo e Actions è abilitato. Verifico configurazione locale e presenza del workflow su GitHub.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "d:\maga\MagRicambi"; git remote -v; git branch; git log -1 --oneline; git ls-files .github/workflows/</summary>
+
+```bash
+cd "d:\maga\MagRicambi"; git remote -v; git branch; git log -1 --oneline; git ls-files .github/workflows/
+```
+
+```
+origin	git@github.com:AV77web/magricambi.git (fetch)
+origin	git@github.com:AV77web/magricambi.git (push)
+* main
+d11ca1a commit di prova
+.github/workflows/deploy.yml
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/main/.github/workflows/deploy.yml"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "name: Deploy to VPS\n\non:\n push:\n branches:\n - main\n workflow_dispatch:\n\njobs:\n build:\n runs-on: ubuntu-latest\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Setup Node.js\n uses: actions/setup-node@v4\n with:\n node-version: \"20\"\n cache: npm\n cache-dependency-path: package-lock.json\n\n - name: Install dependencies\n run: npm ci\n\n - name: Build\n run: npm run build\n\n deploy:\n needs: build\n runs-on: ubuntu-latest\n\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Deploy via SSH\n uses: appleboy/ssh-action@v1.0.3\n with:\n host: ${{ secrets.VPS_HOST }}\n username: ${{ secrets.VPS_USER }}\n key: ${{ secrets.VPS_SSH_KEY }}\n script: |\n echo \"START DEPLOY\"\n cd /root/magricambi\n git pull --ff-only\n docker compose up -d --build\n",
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/main/.github/workflows/deploy.yml"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/workflows"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"total_count\":1,\"workflows\":[{\"id\":282750270,\"node_id\":\"W_kwDOSmxQSc4Q2m0-\",\"name\":\"Deploy to VPS\",\"path\":\".github/workflows/deploy.yml\",\"state\":\"active\",\"created_at\":\"2026-05-25T07:49:09.000Z\",\"updated_at\":\"2026-05-25T07:49:09.000Z\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"html_url\":\"https://github.com/AV77web/magricambi/blob/main/.github/workflows/deploy.yml\",\"badge_url\":\"https://github.com/AV77web/magricambi/workflows/Deploy%20to%20VPS/badge.svg\"}]}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/workflows"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?per_page=5"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"total_count\":14,\"workflow_runs\":[{\"id\":26402497728,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJbYkwA\",\"head_branch\":\"main\",\"head_sha\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"eliminato jpg dei certificati ssl\",\"run_number\":14,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70648977031,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcwHWhw\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26402497728\",\"pull_requests\":[],\"created_at\":\"2026-05-25T13:17:39Z\",\"updated_at\":\"2026-05-25T13:18:33Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T13:17:39Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70648977031\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"tree_id\":\"643d50d066f572bcc3a9d7b212d29b5c7b43558f\",\"message\":\"eliminato jpg dei certificati ssl\",\"timestamp\":\"2026-05-25T13:17:34Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26402349710,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJbPijg\",\"head_branch\":\"main\",\"head_sha\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"impostata struttura di magricambi\",\"run_number\":13,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70648492536,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcvpx-A\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26402349710\",\"pull_requests\":[],\"created_at\":\"2026-05-25T13:13:58Z\",\"updated_at\":\"2026-05-25T13:14:56Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T13:13:58Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70648492536\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"tree_id\":\"2f954269bf1e12a8fecdf679a696e5d8e84faef8\",\"message\":\"impostata struttura di magricambi\",\"timestamp\":\"2026-05-25T13:13:52Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26397548605,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJWqgPQ\",\"head_branch\":\"main\",\"head_sha\":\"ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"aggiornamento a [slug]/page.tsx e a [...slug]/page.tsx\",\"run_number\":12,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70633488763,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQchWBew\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26397548605\",\"pull_requests\":[],\"created_at\":\"2026-05-25T11:12:44Z\",\"updated_at\":\"2026-05-25T11:13:57Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T11:12:44Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70633488763\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"tree_id\":\"a52c096bf1245e81a698deaf4ad516dd94ec299a\",\"message\":\"aggiornamento a [slug]/page.tsx e a [...slug]/page.tsx\",\"timestamp\":\"2026-05-25T11:12:30Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26396122378,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJVTdCg\",\"head_branch\":\"main\",\"head_sha\":\"4bb0dcdcd508ff6e0e63410b26854b6a5d3f36ce\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"riperistinata la Navbar\",\"run_number\":11,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70629051895,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcdHN9w\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26396122378\",\"pull_requests\":[],\"created_at\":\"2026-05-25T10:35:21Z\",\"updated_at\":\"2026-05-25T10:37:07Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T10:35:21Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70629051895\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26396122378/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"4bb0dcdcd508ff6e0e63410b26854b6a5d3f36ce\",\"tree_id\":\"9938a7a7e30d575b85a8426ed0a3916d258f29a9\",\"message\":\"riperistinata la Navbar\",\"timestamp\":\"2026-05-25T10:34:52Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26395147258,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJUX7-g\",\"head_branch\":\"main\",\"head_sha\":\"c1354f55020d607ec6042bbb8c933f0d72e571b9\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"modificha di prova alla navbar\",\"run_number\":10,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70625969311,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcaLEnw\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26395147258\",\"pull_requests\":[],\"created_at\":\"2026-05-25T10:10:09Z\",\"updated_at\":\"2026-05-25T10:11:47Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T10:10:09Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70625969311\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26395147258/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"c1354f55020d607ec6042bbb8c933f0d72e571b9\",\"tree_id\":\"b27dbc1e624e9824eddbfbbb005ea3f6b6b41adb\",\"message\":\"modificha di prova alla navbar\",\"timestamp\":\"2026-05-25T10:09:56Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}}]}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?per_page=5"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\",\"created_at\":\"2026-05-24T21:41:17Z\",\"updated_at\":\"2026-05-26T11:39:30Z\",\"pushed_at\":\"2026-05-26T11:39:26Z\",\"git_url\":\"git://github.com/AV77web/magricambi.git\",\"ssh_url\":\"git@github.com:AV77web/magricambi.git\",\"clone_url\":\"https://github.com/AV77web/magricambi.git\",\"svn_url\":\"https://github.com/AV77web/magricambi\",\"homepage\":null,\"size\":344,\"stargazers_count\":0,\"watchers_count\":0,\"language\":\"TypeScript\",\"has_issues\":true,\"has_projects\":true,\"has_downloads\":true,\"has_wiki\":true,\"has_pages\":false,\"has_discussions\":false,\"forks_count\":0,\"mirror_url\":null,\"archived\":false,\"disabled\":false,\"open_issues_count\":0,\"license\":null,\"allow_forking\":true,\"is_template\":false,\"web_commit_signoff_required\":false,\"has_pull_requests\":true,\"pull_request_creation_policy\":\"all\",\"topics\":[],\"visibility\":\"public\",\"forks\":0,\"open_issues\":0,\"watchers\":0,\"default_branch\":\"main\",\"temp_clone_token\":null,\"network_count\":0,\"subscribers_count\":0}",
+  "url": "https://api.github.com/repos/AV77web/magricambi"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\villa\.cursor\projects\d-maga-MagRicambi\agent-tools\1f6c59a8-0d62-4a36-a7c1-419b89060607.txt</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The last workflow run on magricambi occurred on May 25, 2026, at 13:17 for commit eb6a56f, which removed SSL certificate JPG files.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/commits?per_page=5"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "[{\"sha\":\"d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7\",\"node_id\":\"C_kwDOSmxQSdoAKGQxMWNhMWE1ZGE1YjI2MWFiMWU4OTY3ZTRmMGZmNTFlNDk0ZmUwYjc\",\"commit\":{\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:39:23Z\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:39:23Z\"},\"message\":\"commit di prova\",\"tree\":{\"sha\":\"69dad19035c000f108d138f7b54fe6f55ce52659\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees/69dad19035c000f108d138f7b54fe6f55ce52659\"},\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7\",\"comment_count\":0,\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}},\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7/comments\",\"author\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"committer\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"parents\":[{\"sha\":\"1349cc159c192fda91eddc1896ab8e699aa90f32\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/1349cc159c192fda91eddc1896ab8e699aa90f32\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/1349cc159c192fda91eddc1896ab8e699aa90f32\"}]},{\"sha\":\"1349cc159c192fda91eddc1896ab8e699aa90f32\",\"node_id\":\"C_kwDOSmxQSdoAKDEzNDljYzE1OWMxOTJmZGE5MWVkZGMxODk2YWI4ZTY5OWFhOTBmMzI\",\"commit\":{\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:23:50Z\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:23:50Z\"},\"message\":\"commit di prova\",\"tree\":{\"sha\":\"8deeb0c2df6adf28545f3f981ef0fefd506e782b\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees/8deeb0c2df6adf28545f3f981ef0fefd506e782b\"},\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits/1349cc159c192fda91eddc1896ab8e699aa90f32\",\"comment_count\":0,\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}},\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/1349cc159c192fda91eddc1896ab8e699aa90f32\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/1349cc159c192fda91eddc1896ab8e699aa90f32\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/1349cc159c192fda91eddc1896ab8e699aa90f32/comments\",\"author\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"committer\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"parents\":[{\"sha\":\"7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\"}]},{\"sha\":\"7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"node_id\":\"C_kwDOSmxQSdoAKDdlNTQ2NDI1N2I3MGVmODRhNWE4MGJlNTc1MWVjMGFlMWFmMWExYTk\",\"commit\":{\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:15:27Z\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-26T11:15:27Z\"},\"message\":\"modifiche a deploy.yml e a docker-compose.yml\",\"tree\":{\"sha\":\"45e9ea2bbe386536950990faa9dbef04317e4448\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees/45e9ea2bbe386536950990faa9dbef04317e4448\"},\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"comment_count\":0,\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}},\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/comments\",\"author\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"committer\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"parents\":[{\"sha\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/eb6a56f92caa947d87464fc70c67c926ea10925e\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/eb6a56f92caa947d87464fc70c67c926ea10925e\"}]},{\"sha\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"node_id\":\"C_kwDOSmxQSdoAKGViNmE1NmY5MmNhYTk0N2Q4NzQ2NGZjNzBjNjdjOTI2ZWExMDkyNWU\",\"commit\":{\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-25T13:17:34Z\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-25T13:17:34Z\"},\"message\":\"eliminato jpg dei certificati ssl\",\"tree\":{\"sha\":\"643d50d066f572bcc3a9d7b212d29b5c7b43558f\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees/643d50d066f572bcc3a9d7b212d29b5c7b43558f\"},\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits/eb6a56f92caa947d87464fc70c67c926ea10925e\",\"comment_count\":0,\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}},\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/eb6a56f92caa947d87464fc70c67c926ea10925e\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/eb6a56f92caa947d87464fc70c67c926ea10925e\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/eb6a56f92caa947d87464fc70c67c926ea10925e/comments\",\"author\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"committer\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"parents\":[{\"sha\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/cab368a115a8696fa89b7f8a2bd26fb93c8cda72\"}]},{\"sha\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"node_id\":\"C_kwDOSmxQSdoAKGNhYjM2OGExMTVhODY5NmZhODliN2Y4YTJiZDI2ZmI5M2M4Y2RhNzI\",\"commit\":{\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-25T13:13:52Z\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\",\"date\":\"2026-05-25T13:13:52Z\"},\"message\":\"impostata struttura di magricambi\",\"tree\":{\"sha\":\"2f954269bf1e12a8fecdf679a696e5d8e84faef8\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees/2f954269bf1e12a8fecdf679a696e5d8e84faef8\"},\"url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits/cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"comment_count\":0,\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}},\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/cab368a115a8696fa89b7f8a2bd26fb93c8cda72/comments\",\"author\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"committer\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"parents\":[{\"sha\":\"ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"html_url\":\"https://github.com/AV77web/magricambi/commit/ad52596f4b0ebcb8949beed24bb0c741aa30461c\"}]}]",
+  "url": "https://api.github.com/repos/AV77web/magricambi/commits?per_page=5"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: cd "d:\maga\MagRicambi"; git log -5 --oneline; git status -sb</summary>
+
+```bash
+cd "d:\maga\MagRicambi"; git log -5 --oneline; git status -sb
+```
+
+```
+d11ca1a commit di prova
+1349cc1 commit di prova
+7e54642 modifiche a deploy.yml e a docker-compose.yml
+eb6a56f eliminato jpg dei certificati ssl
+cab368a impostata struttura di magricambi
+## main...origin/main
+ M .specstory/history/2026-05-25_14-48-14Z-nel-mio-docker-descktop-ho-un-conatiner-magricacmbi-e-un'allro.md
+ M .specstory/statistics.json
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+This is now clear:
+
+1. Commits after eb6a56f (May 25, 13:17) on the magricambi repository:
+
+Commits after eb6a56f on the magricambi repository include 7e54642, 1349cc1, and d11ca1a, with the last successful workflow run being for eb6a56f on May 25. However, no workflow runs occurred for the subsequent commits despite them existing on GitHub. This raises the question of why commits are pushed but workflows do not trigger. One possibility is that the workflow file became broken or invalid after commit 7e54642, particularly since that commit altered deploy.yml and added large .specstory files.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?head_sha=d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"total_count\":0,\"workflow_runs\":[]}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?head_sha=d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/status"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"state\":\"pending\",\"statuses\":[],\"sha\":\"7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"total_count\":0,\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"commit_url\":\"https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/status\"}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/commits/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/status"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/.github/workflows/deploy.yml"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "name: Deploy to VPS\n\non:\n push:\n branches:\n - main\n workflow_dispatch:\n\njobs:\n build:\n runs-on: ubuntu-latest\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Setup Node.js\n uses: actions/setup-node@v4\n with:\n node-version: \"20\"\n cache: npm\n cache-dependency-path: package-lock.json\n\n - name: Install dependencies\n run: npm ci\n\n - name: Build\n run: npm run build\n\n deploy:\n needs: build\n runs-on: ubuntu-latest\n\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Deploy via SSH\n uses: appleboy/ssh-action@v1.0.3\n with:\n host: ${{ secrets.VPS_HOST }}\n username: ${{ secrets.VPS_USER }}\n key: ${{ secrets.VPS_SSH_KEY }}\n script: |\n echo \"START DEPLOY\"\n cd /root/magricambi\n git pull --ff-only\n docker compose up -d --build\n",
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/7e5464257b70ef84a5a80be5751ec0ae1af1a1a9/.github/workflows/deploy.yml"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Confirmed: commits d11ca1a, 7e54642, 1349cc1 have zero workflow runs.
+
+The last workflow run occurred on May 25 with commit eb6a56f, indicating GitHub Actions ceased triggering after 13:17 on that date despite successful commit pushes. Possible reasons include account-level actions disabling, repository-specific settings, disabled workflows, non-GitHub push sources, or branch history rewriting issues.
+
+GitHub Actions may have stopped triggering due to commits marked with `[skip ci]` or `[ci skip]` in the message, though the commit "di prova" does not contain such markers.
+
+The repository might have been transferred or require re-enabling of Actions.
+
+There's a possibility that the repository "magricambi" was recreated, which could affect workflow triggers.
+
+It's unlikely that commits were pushed via API or import without webhooks.
+
+Organization secrets are not relevant in this case.
+
+Commits like 7e54642 were pushed after the workflow file existed on the branch, so that scenario is ruled out.</details></think>
+
+_**Agent (default)**_
+
+Fetch timed out while retrieving content
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi1/actions/runs?per_page=3"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"total_count\":14,\"workflow_runs\":[{\"id\":26402497728,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJbYkwA\",\"head_branch\":\"main\",\"head_sha\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"eliminato jpg dei certificati ssl\",\"run_number\":14,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70648977031,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcwHWhw\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26402497728\",\"pull_requests\":[],\"created_at\":\"2026-05-25T13:17:39Z\",\"updated_at\":\"2026-05-25T13:18:33Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T13:17:39Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70648977031\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402497728/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"eb6a56f92caa947d87464fc70c67c926ea10925e\",\"tree_id\":\"643d50d066f572bcc3a9d7b212d29b5c7b43558f\",\"message\":\"eliminato jpg dei certificati ssl\",\"timestamp\":\"2026-05-25T13:17:34Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26402349710,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJbPijg\",\"head_branch\":\"main\",\"head_sha\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"impostata struttura di magricambi\",\"run_number\":13,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70648492536,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQcvpx-A\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26402349710\",\"pull_requests\":[],\"created_at\":\"2026-05-25T13:13:58Z\",\"updated_at\":\"2026-05-25T13:14:56Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T13:13:58Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70648492536\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26402349710/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"cab368a115a8696fa89b7f8a2bd26fb93c8cda72\",\"tree_id\":\"2f954269bf1e12a8fecdf679a696e5d8e84faef8\",\"message\":\"impostata struttura di magricambi\",\"timestamp\":\"2026-05-25T13:13:52Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}},{\"id\":26397548605,\"name\":\"Deploy to VPS\",\"node_id\":\"WFR_kwLOSmxQSc8AAAAGJWqgPQ\",\"head_branch\":\"main\",\"head_sha\":\"ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"path\":\".github/workflows/deploy.yml\",\"display_title\":\"aggiornamento a [slug]/page.tsx e a [...slug]/page.tsx\",\"run_number\":12,\"event\":\"push\",\"status\":\"completed\",\"conclusion\":\"success\",\"workflow_id\":282750270,\"check_suite_id\":70633488763,\"check_suite_node_id\":\"CS_kwDOSmxQSc8AAAAQchWBew\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605\",\"html_url\":\"https://github.com/AV77web/magricambi/actions/runs/26397548605\",\"pull_requests\":[],\"created_at\":\"2026-05-25T11:12:44Z\",\"updated_at\":\"2026-05-25T11:13:57Z\",\"actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"run_attempt\":1,\"referenced_workflows\":[],\"run_started_at\":\"2026-05-25T11:12:44Z\",\"triggering_actor\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"jobs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/jobs\",\"logs_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/logs\",\"check_suite_url\":\"https://api.github.com/repos/AV77web/magricambi/check-suites/70633488763\",\"artifacts_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/artifacts\",\"cancel_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/cancel\",\"rerun_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/runs/26397548605/rerun\",\"previous_attempt_url\":null,\"workflow_url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"head_commit\":{\"id\":\"ad52596f4b0ebcb8949beed24bb0c741aa30461c\",\"tree_id\":\"a52c096bf1245e81a698deaf4ad516dd94ec299a\",\"message\":\"aggiornamento a [slug]/page.tsx e a [...slug]/page.tsx\",\"timestamp\":\"2026-05-25T11:12:30Z\",\"author\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"},\"committer\":{\"name\":\"AV77web\",\"email\":\"villari.andrea@libero.it\"}},\"repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"},\"head_repository\":{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\"}}]}",
+  "url": "https://api.github.com/repos/AV77web/magricambi1/actions/runs?per_page=3"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\villa\\.cursor\\projects\\d-maga-MagRicambi\\agent-tools\\8922636c-a62b-4a64-855e-521c40f57c66.txt",
+  "pattern": "head_sha|created_at|display_title"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\villa\\.cursor\\projects\\d-maga-MagRicambi\\agent-tools\\8922636c-a62b-4a64-855e-521c40f57c66.txt",
+  "pattern": "head_sha|created_at|display_title",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "C:\\Users\\villa\\.cursor\\projects\\d-maga-MagRicambi\\agent-tools\\8922636c-a62b-4a64-855e-521c40f57c66.txt"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The magricambi1 API returns identical runs to magricambi, including the same run ID (26402497728) and URL (github.com/AV77web/magricambi/actions).
+
+So magricambi1 was likely renamed to magricambi, explaining the identical runs and URL. The issue is that commits after eb6a56f don't trigger workflows, possibly due to commit 7e54642 breaking the workflow file used by GitHub to determine triggers.
+
+The .specstory commit likely didn't cause GitHub to skip actions due to repo size or timeout. GitHub Actions aren't disabled due to detected secrets, and magricambi is a public repository, not a fork with disabled actions.
+
+Commit 7e54642 includes a valid deploy.yml workflow file. While pushes might have been made with `--no-verify` or through the web interface without triggering actions, such commits should still trigger workflows.
+
+The most likely reasons for zero runs after successful pushes are that the workflow is disabled, repository actions are turned off, or account billing issues occurred. However, pushing with `git push --no-verify` does not prevent GitHub Actions from triggering. The scenario of a fast-forward push from a local mirror not firing a webhook is unlikely. Additionally, since magricambi is a public repository, it's not subject to fork restrictions on Actions.
+
+The `.github/workflows/deploy.yml` file exists in commit 7e54642, so it's not missing. Branch protection or rulesets could be blocking workflows, which is a new GitHub feature. There may also be a syntax error in the workflow file that GitHub doesn't validate until runtime, such as invisible characters or a duplicate `name:` key causing validation failure. A comparison between the working and broken versions shows they are structurally identical, so the issue likely lies in subtle syntax or configuration differences not immediately apparent.
+
+**Maybe commit 7e54642 introduced changes that cause `npm ci` to fail**, leading the user to believe the workflow didnt runhowever, zero runs indicate no workflow was initiated at all.
+
+The user is an individual under an enterprise account, so GITHUB_TOKEN policies are unlikely to be the issue. Repository visibility remains public, ruling out visibility-based restrictions.
+
+To investigate:
+- Visit https://github.com/AV77web/magricambi/actions (not magricambi1)
+- Confirm the workflow isn't disabled and enable it if needed
+- Ensure "Allow all" actions are enabled in Settings  Actions
+- Try manually running the workflow
+- Check the commit page (e.g., d11ca1a) for any missing CI status indicators
+
+If the repository was recreated, secrets from magricambi1 must be re-added to magricambi, though the workflow would still start and fail during deployment.
+
+A rename from magricambi1 to magricambi may cause webhook glitches, requiring a push or re-enabling of actions.
+
+A force push replacing history might not have triggered the workflow if commits were pushed in batch, although each push should normally trigger one run.
+
+Check the commit status for d11ca1a on GitHub to verify CI status indicators.
+
+Commits after eb6a56f include large .specstory files, possibly from the magricambi1 merge, yet the workflow should still trigger. The user was likely on the magricambi1 branch, where pushes triggered actions. When they switched to magricambi, it was already renamed, so pushes should have worked. However, if magricambi and magricambi1 are separate repositories and the user force-pushed commits from magricambi1 to magricambi, then magricambi might never have had actions enabled. The history shows magricambi includes commit 7e54642 from magricambi1, suggesting a direct transfer rather than a true rename.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi1"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"id\":1248612425,\"node_id\":\"R_kgDOSmxQSQ\",\"name\":\"magricambi\",\"full_name\":\"AV77web/magricambi\",\"private\":false,\"owner\":{\"login\":\"AV77web\",\"id\":215104241,\"node_id\":\"U_kgDODNI68Q\",\"avatar_url\":\"https://avatars.githubusercontent.com/u/215104241?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/AV77web\",\"html_url\":\"https://github.com/AV77web\",\"followers_url\":\"https://api.github.com/users/AV77web/followers\",\"following_url\":\"https://api.github.com/users/AV77web/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/AV77web/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/AV77web/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/AV77web/subscriptions\",\"organizations_url\":\"https://api.github.com/users/AV77web/orgs\",\"repos_url\":\"https://api.github.com/users/AV77web/repos\",\"events_url\":\"https://api.github.com/users/AV77web/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/AV77web/received_events\",\"type\":\"User\",\"user_view_type\":\"public\",\"site_admin\":false},\"html_url\":\"https://github.com/AV77web/magricambi\",\"description\":\"gestione ricambi da magazzino\",\"fork\":false,\"url\":\"https://api.github.com/repos/AV77web/magricambi\",\"forks_url\":\"https://api.github.com/repos/AV77web/magricambi/forks\",\"keys_url\":\"https://api.github.com/repos/AV77web/magricambi/keys{/key_id}\",\"collaborators_url\":\"https://api.github.com/repos/AV77web/magricambi/collaborators{/collaborator}\",\"teams_url\":\"https://api.github.com/repos/AV77web/magricambi/teams\",\"hooks_url\":\"https://api.github.com/repos/AV77web/magricambi/hooks\",\"issue_events_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/events{/number}\",\"events_url\":\"https://api.github.com/repos/AV77web/magricambi/events\",\"assignees_url\":\"https://api.github.com/repos/AV77web/magricambi/assignees{/user}\",\"branches_url\":\"https://api.github.com/repos/AV77web/magricambi/branches{/branch}\",\"tags_url\":\"https://api.github.com/repos/AV77web/magricambi/tags\",\"blobs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/blobs{/sha}\",\"git_tags_url\":\"https://api.github.com/repos/AV77web/magricambi/git/tags{/sha}\",\"git_refs_url\":\"https://api.github.com/repos/AV77web/magricambi/git/refs{/sha}\",\"trees_url\":\"https://api.github.com/repos/AV77web/magricambi/git/trees{/sha}\",\"statuses_url\":\"https://api.github.com/repos/AV77web/magricambi/statuses/{sha}\",\"languages_url\":\"https://api.github.com/repos/AV77web/magricambi/languages\",\"stargazers_url\":\"https://api.github.com/repos/AV77web/magricambi/stargazers\",\"contributors_url\":\"https://api.github.com/repos/AV77web/magricambi/contributors\",\"subscribers_url\":\"https://api.github.com/repos/AV77web/magricambi/subscribers\",\"subscription_url\":\"https://api.github.com/repos/AV77web/magricambi/subscription\",\"commits_url\":\"https://api.github.com/repos/AV77web/magricambi/commits{/sha}\",\"git_commits_url\":\"https://api.github.com/repos/AV77web/magricambi/git/commits{/sha}\",\"comments_url\":\"https://api.github.com/repos/AV77web/magricambi/comments{/number}\",\"issue_comment_url\":\"https://api.github.com/repos/AV77web/magricambi/issues/comments{/number}\",\"contents_url\":\"https://api.github.com/repos/AV77web/magricambi/contents/{+path}\",\"compare_url\":\"https://api.github.com/repos/AV77web/magricambi/compare/{base}...{head}\",\"merges_url\":\"https://api.github.com/repos/AV77web/magricambi/merges\",\"archive_url\":\"https://api.github.com/repos/AV77web/magricambi/{archive_format}{/ref}\",\"downloads_url\":\"https://api.github.com/repos/AV77web/magricambi/downloads\",\"issues_url\":\"https://api.github.com/repos/AV77web/magricambi/issues{/number}\",\"pulls_url\":\"https://api.github.com/repos/AV77web/magricambi/pulls{/number}\",\"milestones_url\":\"https://api.github.com/repos/AV77web/magricambi/milestones{/number}\",\"notifications_url\":\"https://api.github.com/repos/AV77web/magricambi/notifications{?since,all,participating}\",\"labels_url\":\"https://api.github.com/repos/AV77web/magricambi/labels{/name}\",\"releases_url\":\"https://api.github.com/repos/AV77web/magricambi/releases{/id}\",\"deployments_url\":\"https://api.github.com/repos/AV77web/magricambi/deployments\",\"created_at\":\"2026-05-24T21:41:17Z\",\"updated_at\":\"2026-05-26T11:39:30Z\",\"pushed_at\":\"2026-05-26T11:39:26Z\",\"git_url\":\"git://github.com/AV77web/magricambi.git\",\"ssh_url\":\"git@github.com:AV77web/magricambi.git\",\"clone_url\":\"https://github.com/AV77web/magricambi.git\",\"svn_url\":\"https://github.com/AV77web/magricambi\",\"homepage\":null,\"size\":344,\"stargazers_count\":0,\"watchers_count\":0,\"language\":\"TypeScript\",\"has_issues\":true,\"has_projects\":true,\"has_downloads\":true,\"has_wiki\":true,\"has_pages\":false,\"has_discussions\":false,\"forks_count\":0,\"mirror_url\":null,\"archived\":false,\"disabled\":false,\"open_issues_count\":0,\"license\":null,\"allow_forking\":true,\"is_template\":false,\"web_commit_signoff_required\":false,\"has_pull_requests\":true,\"pull_request_creation_policy\":\"all\",\"topics\":[],\"visibility\":\"public\",\"forks\":0,\"open_issues\":0,\"watchers\":0,\"default_branch\":\"main\",\"temp_clone_token\":null,\"network_count\":0,\"subscribers_count\":0}",
+  "url": "https://api.github.com/repos/AV77web/magricambi1"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Perfect! The repository named magricambi1 has been renamed to magricambi, though it retains the same repository ID 1248612425.
+
+There is only one repository involved, named magricambi with ID 1248612425. The issue is that workflow runs have stopped after commit eb6a56f on May 25 at 13:17, despite subsequent commits like 7e54642 and 1349cc1 having been pushed. The last successful run was #14 for eb6a56f. This suggests Actions stopped triggering approximately 22 hours ago for new pushes, unrelated to the repository rename from magricambi1 to magricambi. Possible causes include: workflow being disabled manually, Actions being disabled in settings, or an issue with the GitHub account such as usage limits or policy violations.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7/.github/workflows/deploy.yml"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "name: Deploy to VPS\n\non:\n push:\n branches:\n - main\n workflow_dispatch:\n\njobs:\n build:\n runs-on: ubuntu-latest\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Setup Node.js\n uses: actions/setup-node@v4\n with:\n node-version: \"20\"\n cache: npm\n cache-dependency-path: package-lock.json\n\n - name: Install dependencies\n run: npm ci\n\n - name: Build\n run: npm run build\n\n deploy:\n needs: build\n runs-on: ubuntu-latest\n\n steps:\n - name: Checkout\n uses: actions/checkout@v4\n\n - name: Deploy via SSH\n uses: appleboy/ssh-action@v1.0.3\n with:\n host: ${{ secrets.VPS_HOST }}\n username: ${{ secrets.VPS_USER }}\n key: ${{ secrets.VPS_SSH_KEY }}\n script: |\n echo \"START DEPLOY\"\n cd /root/magricambi\n git pull --ff-only\n docker compose up -d --build\n",
+  "url": "https://raw.githubusercontent.com/AV77web/magricambi/d11ca1a5da5b261ab1e8967e4f0ff51e494fe0b7/.github/workflows/deploy.yml"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The workflow file is correct, but no runs for recent commits indicates the issue.
+
+Most likely user-facing causes include the workflow being disabled in GitHub UI, actions being disabled for the repository, or viewing the wrong location due to URL redirection issues. Public repositories should not be affected by billing limits, and push event delivery problems can be mitigated with manual re-runs or workflow_dispatch triggers. The user may also be expecting to see green checkmarks on commits, but no checks exist since eb6a56f.
+
+The fix steps involve verifying workflow status and ensuring proper event triggering mechanisms are in place.
+```</details></think>
+
+_**Agent (default)**_
+
+Ho verificato il repo **AV77web/magricambi**: la situazione è questa.
+
+## Buone notizie
+
+- **`magricambi1` è stato rinominato in `magricambi`** (stesso repository, stesso ID). Il remote `git@github.com:AV77web/magricambi.git` è corretto.
+- Il workflow **esiste ed è attivo** su GitHub.
+- I commit **arrivano** (es. `d11ca1a` – "commit di prova" del 26/05).
+
+## Il problema reale
+
+Le Actions **non sono disabilitate dal cambio nome**, ma **dopo il 25/05 alle 13:17 non è partito più nessun run**.
+
+| Ultimo run | Commit | Data |
+|------------|--------|------|
+| Run #14 (successo) | `eb6a56f` – "eliminato jpg dei certificati ssl" | 25/05 13:17 |
+| Nessun run | `7e54642` – "modifiche a deploy.yml..." | 26/05 11:15 |
+| Nessun run | `1349cc1`, `d11ca1a` – "commit di prova" | 26/05 |
+
+I commit ci sono su GitHub, ma **nessuna Action** è stata avviata per quelli più recenti. Non è un problema di `deploy.yml` nel codice (il file su `main` è valido).
+
+---
+
+## Cosa controllare su GitHub (in ordine)
+
+### 1. Pagina Actions giusta
+Apri solo questo link (non `magricambi1`):
+
+**https://github.com/AV77web/magricambi/actions**
+
+### 2. Workflow disabilitato manualmente
+`Actions` → **Deploy to VPS** → menu `...` → se vedi **"Enable workflow"**, cliccalo.
+
+A volte succede dopo errori o modifiche al workflow.
+
+### 3. Actions abilitate nel repo
+`Settings` → `Actions` → `General` → **Allow all actions and reusable workflows** → Save.
+
+### 4. Avvio manuale (test immediato)
+`Actions` → **Deploy to VPS** → **Run workflow** → branch `main` → **Run workflow**.
+
+- Se **parte** → il workflow va bene; i push non stavano innescando il trigger (o il workflow era disabilitato).
+- Se **non parte** → limite account, policy Actions, o repo con Actions spente.
+
+### 5. Limite minuti Actions (account)
+**https://github.com/settings/billing** → sezione Actions: verifica che non ci sia un blocco/spesa sospesa.
+
+### 6. Segreti SSH (dopo rename di solito restano)
+`Settings` → `Secrets and variables` → `Actions` → devono esserci:
+
+- `VPS_HOST`
+- `VPS_USER`
+- `VPS_SSH_KEY`
+
+Se mancano, il workflow **parte comunque** ma il job **deploy** fallisce (non spiega “nessun run”).
+
+### 7. Forza un nuovo run con push
+```bash
+git commit --allow-empty -m "trigger: riavvio Actions"
+git push origin main
+```
+
+Poi ricarica la pagina Actions.
+
+---
+
+## Non confondere commit e Actions
+
+| Cosa vedi | Significato |
+|-----------|-------------|
+| Commit su GitHub | `git push` ok |
+| Nessuna riga in Actions | webhook/trigger disabilitato o workflow spento |
+| Run rosso | workflow partito ma build/deploy fallito |
+
+---
+
+## Quando le Actions ripartono (VPS)
+
+Il deploy fa `git pull` in `/root/magricambi`. La cartella `.git` deve essere **lì**:
+
+```bash
+ls -la /root/magricambi/.git
+```
+
+Se `.git` è ancora in una sottocartella, adatta lo script SSH o sposta il repo.
+
+---
+
+In sintesi: **non è perché sei passato da `magricambi1` a `magricambi`** (è lo stesso repo rinominato). I push funzionano, ma **da ieri pomeriggio GitHub non avvia più il workflow** sui commit nuovi: controlla soprattutto **workflow disabilitato** e **Run workflow** manuale.
+
+Dopo il test manuale, scrivi se il run parte e se è verde o rosso: così capiamo se il problema era solo il trigger o anche build/deploy.
+
+---
+
+_**User**_
+
+in action permission è attivo Allow all actions and reusable workflows ma se tento di essguire manualmente il deploy ricevo: Failed to queue workflow run. Please try again.
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user encounters a GitHub Actions error: "Failed to queue workflow run" when attempting to manually trigger the workflow.</details></think>
+
+_**Agent (default)**_
+
+L'errore "Failed to queue workflow run" viene da GitHub, non dal deploy sulla VPS. Analizziamo il workflow e le cause più comuni.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: d:\maga\MagRicambi\.github\workflows\deploy.yml</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search">
+<details>
+<summary>Tool use: **web_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "searchTerm": "GitHub Actions \"Failed to queue workflow run\" Please try again workflow_dispatch"
+}
+```
+Result:
+
+```json
+{
+  "isFinal": true,
+  "references": [
+    {
+      "chunk": "Links:\n1. [Fix GitHub Actions Workflow Stuck in 'Queued' | DevOpsil](https://devopsil.com/articles/2026-03-30-github-actions-workflow-stuck-queued-fix)\n2. [Unpacking GitHub Actions Delays: When Self-Hosted Runners Go Idle But Workflows Stay Queued - DEV Community](https://dev.to/devactivity/unpacking-github-actions-delays-when-self-hosted-runners-go-idle-but-workflows-stay-queued-547n)\n3. [Troubleshooting GitHub Action Jobs: Stuck in Queued State, Never Running \u0026 Automatically Failing Despite No System Downtime — tutorialpedia.org](https://www.tutorialpedia.org/blog/all-github-action-jobs-are-queued-and-never-running/)\n4. [Unfreezing Your GitHub Actions: Troubleshooting Stuck Deployments and Protecting Your Git Repo Statistics - DEV Community](https://dev.to/devactivity/unfreezing-your-github-actions-troubleshooting-stuck-deployments-and-protecting-your-git-repo-2adh)\n5. [GitHub Actions workflow stuck in \"queued\" state and cannot be cancelled · Issue #3872 · actions/runner](https://github.com/actions/runner/issues/3872)\n\nSynthesis:\nWorkflows stuck in a \"Queued\" state often occur because no runner is available or a concurrency group is blocking execution [1][2][3].\n\nTo resolve this, perform these checks:\n\n1. Verify Runner Availability: Ensure self-hosted runners are online and labels match the workflow's runs-on directive [1][2]. Check for service crashes using systemctl status actions.runner.*.service [1].\n2. Check Concurrency: See if a previous run in the same group is blocking the queue [1]. If so, wait for it or cancel it using:\ngh run cancel \u003crun-id\u003e [1]\n3. Check Approvals: If the workflow is from a fork, click the yellow \"Approve and run\" banner in the Actions tab [1].\n4. Force Cancel: If the UI fails to cancel a stuck job, use the GitHub CLI:\ngh api -X POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel [4]\n5. Platform Issues: If runners are idle but jobs remain queued, it may be a transient GitHub service incident [2][4]. Check the official GitHub status page [4].\n\nHighlights:\n\u003cresult id=\"1\"\u003e\n\u003ctitle\u003eFix GitHub Actions Workflow Stuck in 'Queued' | DevOpsil\u003c/title\u003e\n\u003curl\u003ehttps://devopsil.com/articles/2026-03-30-github-actions-workflow-stuck-queued-fix\u003c/url\u003e\n\u003ccontent\u003eYou push a commit or trigger a workflow, and the GitHub Actions run shows \"Queued\" indefinitely. The job never picks up a runner and the status spinner keeps spinning with no progress.\n[...]\nA workflow stays queued when no runner is available to execute it. The most common causes are:\n[...]\n1. Self-hosted runner is offline. The runner machine is stopped, the runner service crashed, or the runner lost connectivity.\n[...]\n2. Label mismatch. The job requests&#96;runs-on: custom-label&#96; but no registered runner has that label.\n[...]\n3. Concurrency limits hit. Your plan's concurrent job limit is reached, or a&#96;concurrency&#96; group is blocking the run.\n4. GitHub-hosted runner capacity. Rare, but GitHub occasionally has capacity issues for specific runner types (especially macOS or large runners).\n5. Required approvals. Workflows from fork PRs or first-time contributors require manual approval.\n[...]\n### 1. Check if approval is required\n[...]\n### 2. Verify self-hosted runner status\n[...]\nGo to Settings \u003e Actions \u003e Runners and check the runner status:\n[...]\n### 3. Verify runner labels match\n[...]\nCompare the&#96;runs-on&#96; value in your workflow with the runner's assigned labels:\n[...]\nThe runner must have ALL listed labels. Check in the repository settings or via the API:\n[...]\nmismatch by updating either the workflow or the runner's\n[...]\n### 4. Check concurrency groups\n[...]\nIf your workflow uses concurrency groups, a pending run may be waiting for a previous run to complete:\n[...]\nWith&#96;cancel-in-progress: false&#96;, new runs queue behind the active one. Check the Actions tab for an in-progress run in the same group. Either wait for it to finish or cancel it:\n[...]\n### 5. Check your plan's concurrency limits\n[...]\nCheck how many jobs are currently running\n[...]\n### 6. Re-run the workflow\n[...]\nIf the runner is healthy but the job is still stuck (possibly a transient GitHub issue):\n[...]\n&#96;&#96;&#96;bash\ngh run rerun \u003crun-id\u003e\n\n&#96;&#96;&#96;\n[...]\nSet&#96;cancel-in-progress\n[...]\nqueue pileups on\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"2\"\u003e\n\u003ctitle\u003eUnpacking GitHub Actions Delays: When Self-Hosted Runners Go Idle But Workflows Stay Queued - DEV Community\u003c/title\u003e\n\u003curl\u003ehttps://dev.to/devactivity/unpacking-github-actions-delays-when-self-hosted-runners-go-idle-but-workflows-stay-queued-547n\u003c/url\u003e\n\u003ccontent\u003eThe core of the problem, first noticed around February 2026, involves GitHub Actions workflows failing to start despite an available self-hosted runner. The workflow run stays Queued, with no runner assigned (indicated by&#96;runner_id=0&#96; in job details), even though the runner is reported as&#96;online&#96; and&#96;busy=false&#96; via the GitHub API. These queued runs do not resolve themselves; they only get picked up after a manual intervention, such as triggering a re-run, using&#96;workflow_dispatch&#96;, or pushing another commit. This manual intervention, while effective, introduces an unacceptable delay and undermines the very purpose of automation, directly impacting development efficiency.\n[...]\nShurikovyy provided a detailed example from February 10, 2026, involving a private repository&#96;IcoverLLC/AirFlow&#96; and a workflow&#96;deploy-airflow-dags.yml&#96;. A push to the&#96;develop&#96; branch created Run 21863545638 at 11:45:00Z. For approximately 7-8 minutes, this run remained queued while the designated&#96;airflow&#96; runner (version&#96;2.331.0&#96;, running as a systemd service with labels&#96;[self-hosted, Linux, X64]&#96;) was online and idle. The runner logs confirmed it did not receive any job request until 11:52:52Z, after a manual&#96;workflow_dispatch&#96; was initiated to unblock the process. This clearly demonstrates a disconnect between GitHub's scheduling system and the runner's availability.\n[...]\nThe conclusion from these meticulous diagnostics is clear: while the run was queued, GitHub’s API showed an eligible runner online and idle, and the runner host had working network connectivity to the Actions broker. However, the job remained unassigned for several minutes, and the runner did not receive any job request until it was manually unblocked. This strongly suggests a delay or issue within GitHub's job dispatch, broker messaging, or scheduling mechanisms, rather than a local runner or network outage.\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"3\"\u003e\n\u003ctitle\u003eTroubleshooting GitHub Action Jobs: Stuck in Queued State, Never Running \u0026 Automatically Failing Despite No System Downtime — tutorialpedia.org\u003c/title\u003e\n\u003curl\u003ehttps://www.tutorialpedia.org/blog/all-github-action-jobs-are-queued-and-never-running/\u003c/url\u003e\n\u003ccontent\u003e### Stuck in \"Queued\" State#\n[...]\nA job is marked as \"queued\" in the GitHub Actions UI (under the \"Actions\" tab) but shows no progress for an extended period (e.g., 30+ minutes). The job may display a message like \"Waiting for a runner to pick up this job\" but never transitions to \"in progress.\"\n[...]\n### Jobs Never Start Running#\n[...]\nAfter being queued, the job fails to move to the \"running\" state. This is distinct from being stuck in a queue—here, the job may appear \"active\" but shows no steps executing, or the runner never acknowledges the job.\n[...]\n### Automatically Failing Without Obvious Cause#\n[...]\nThe job fails immediately (within seconds) or after a short delay, but the logs are empty, vague, or lack actionable errors. Examples include:\n[...]\n### Step 7: Check for Intermittent Failures \u0026 Retries#\n[...]\nFlaky network or service issues can cause intermittent failures. Add retry logic to steps:\n[...]\n&#96;&#96;&#96;\n- name: Retry flaky step  \n  uses: nick-invision/retry@v2  \n  with:  \n    max_attempts: 3  \n    retry_on: error  \n    command: ./flaky-script.sh  \n&#96;&#96;&#96;\n[...]\n- Windows:&#96;C:\\actions-runner\\_diag\\&#96; Look for errors like&#96;Failed to connect to GitHub&#96;(network issues) or&#96;Disk space low&#96;(resource constraints).\n- Linux:&#96;/home/runner/actions-runner/_diag/&#96;\n- Re-run the job. Debug logs will appear in the step output, revealing hidden errors (e.g., \"Failed to fetch action metadata\").\n[...]\n### Implement Retry Logic#\n[...]\nAdd retries to flaky steps using actions like nick-invision/retry or&#96;actions/retry&#96;.\n[...]\nGitHub Actions job issues—whether stuck in a queue, failing silently, or refusing to start—are rarely mysterious. By methodically checking resource limits, workflow configurations, runner health, and dependencies, you can resolve most problems quickly. Remember: prevention is key—optimize workflows, monitor runners, and stay updated on GitHub’s latest changes to keep your CI/CD pipeline running smoothly.\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"4\"\u003e\n\u003ctitle\u003eUnfreezing Your GitHub Actions: Troubleshooting Stuck Deployments and Protecting Your Git Repo Statistics - DEV Community\u003c/title\u003e\n\u003curl\u003ehttps://dev.to/devactivity/unfreezing-your-github-actions-troubleshooting-stuck-deployments-and-protecting-your-git-repo-2adh\u003c/url\u003e\n\u003ccontent\u003eOur discussion begins with a developer, Cubic-\n[...]\n, experiencing a persistent problem: a GitHub Actions workflow attempting to deploy to GitHub Pages remained \"queued\" for hours, failing to push edits from a Codespace. Attempts to cancel the run resulted in a frustrating \"Failed to cancel workflow\" error. This scenario, as highlighted by community member Gecko51, is a classic symptom of a broader GitHub Actions incident, where a runner is never assigned, leaving the workflow in a perpetual limbo. Such incidents can severely impact your team's productivity and throw off your meticulously tracked git repo statistics.\n[...]\n- Workflow Not Running on Correct Branch: Confirm that your&#96;on: push&#96; or&#96;on: workflow_dispatch&#96; trigger matches your default or deployment branch. A mismatch here means your workflow won't even activate on the intended changes.\n[...]\nIf you've checked all the above and your workflow is still stuck with a \"Failed to cancel workflow\" error, it's highly likely you're caught in a GitHub Actions incident. This is where technical leadership needs to step in with more advanced troubleshooting, as outlined by Gecko51:\n[...]\n&#96;&#96;&#96;\n**Force-Cancel via API:** The UI cancel button is often ineffective when a runner was never assigned. Instead, use the GitHub CLI to force-cancel the run. Replace &#96;{owner}&#96;, &#96;{repo}&#96;, and &#96;{run_id}&#96; with your specific values. The run ID is visible in the URL of the stuck workflow.\n    &#96;gh api -X POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel&#96;\n[...]\n- **Disable and Re-enable Actions:** If the force-cancel doesn't work, a more drastic but often effective measure is to temporarily disable and then re-enable GitHub Actions for your repository. Navigate to &#96;Settings \u003e Actions \u003e General&#96;, disable, save, then toggle back on. This clears the queued state for your repo.\n[...]\nthe GitHub Status page shows\n[...]\nensures a fresh\n[...]\nrun without introducing new code changes:\n    git commit\n[...]\ntrigger pages deploy\"\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"5\"\u003e\n\u003ctitle\u003eGitHub Actions workflow stuck in \"queued\" state and cannot be cancelled · Issue #3872 · actions/runner\u003c/title\u003e\n\u003curl\u003ehttps://github.com/actions/runner/issues/3872\u003c/url\u003e\n\u003ccontent\u003e# Issue: actions/runner #3872\n\n- Repository: actions/runner | The Runner for GitHub Actions :rocket: | 6K stars | C#\n\n## GitHub Actions workflow stuck in \"queued\" state and cannot be cancelled\n\n- Author: [@Baptiste44110](https://github.com/Baptiste44110)\n- State: open\n- Labels: bug\n- Reactions: 👍 15\n- Created: 2025-05-26T11:30:13Z\n- Updated: 2025-05-29T15:25:32Z\n\nHello GitHub Support,\n\nI'm encountering an issue where my workflow is stuck in the &#96;queued&#96; state for over an hour. This is a public repository, and I am not part of any GitHub organization.\n\nAttempts to cancel the workflow fail with the error: &#96;Failed to cancel workflow&#96;.\n\nThis issue started recently — previously, workflows would run immediately under the same setup. I've verified:\n\n- GitHub Actions system status shows no reported incidents.\n- My YAML workflow file hasn't changed.\n- I'm using only the default GitHub-hosted runners.\n\nWould you be able to investigate what's causing the blockage or help manually cancel the run?\n\nThanks in advance!\n\n---\n\n### Timeline\n\n**Baptiste44110** added label &#96;bug&#96; · May 26, 2025 at 11:30am\n\n**@phracek** commented · May 27, 2025 at 8:20am · edited\n\n\u003e See e.g. here https://github.com/sclorg/betka/actions/runs/15270059850/job/42943356222\n\u003e \n\u003e I used ubuntu-latest. It does not work for GitHub organization as well.\n\n**phracek** mentioned this in PR [#147: Do not use dist-git at all. Use GitLab directly](https://github.com/sclorg/betka/pull/147) · May 27, 2025 at 8:38am\n\n**@RealChuan** commented · May 29, 2025 at 2:18am\n\n\u003e I also encountered this problem.https://github.com/RealChuan/Qt-Graphics/actions/runs/15248567498\n\n**@pgodinhofortis** commented · May 29, 2025 at 3:25pm\n\n\u003e This happens, use the Force Cancel API to cancel the job\n\u003e \n\u003e https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#force-cancel-a-workflow-run\u003c/content\u003e\n\u003c/result\u003e",
+      "title": "Web search results"
+    }
+  ],
+  "rejected": false
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search"><details>
+<summary>Tool use: **web_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/workflows/deploy.yml"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"id\":282750270,\"node_id\":\"W_kwDOSmxQSc4Q2m0-\",\"name\":\"Deploy to VPS\",\"path\":\".github/workflows/deploy.yml\",\"state\":\"active\",\"created_at\":\"2026-05-25T07:49:09.000Z\",\"updated_at\":\"2026-05-25T07:49:09.000Z\",\"url\":\"https://api.github.com/repos/AV77web/magricambi/actions/workflows/282750270\",\"html_url\":\"https://github.com/AV77web/magricambi/blob/main/.github/workflows/deploy.yml\",\"badge_url\":\"https://github.com/AV77web/magricambi/workflows/Deploy%20to%20VPS/badge.svg\"}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/workflows/deploy.yml"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The workflow is currently active on GitHub.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search">
+<details>
+<summary>Tool use: **web_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "searchTerm": "GitHub \"Failed to queue workflow run\" \"Please try again\""
+}
+```
+Result:
+
+```json
+{
+  "isFinal": true,
+  "references": [
+    {
+      "chunk": "Links:\n1. [rmkenv/quantag](https://github.com/rmkenv/quantag)\n2. [Fix GitHub Actions Workflow Stuck in 'Queued' | DevOpsil](https://devopsil.com/articles/2026-03-30-github-actions-workflow-stuck-queued-fix)\n3. [Troubleshooting GitHub Action Jobs: Stuck in Queued State, Never Running \u0026 Automatically Failing Despite No System Downtime — tutorialpedia.org](https://www.tutorialpedia.org/blog/all-github-action-jobs-are-queued-and-never-running/)\n4. [Unfreezing Your GitHub Actions: Troubleshooting Stuck Deployments and Protecting Your Git Repo Statistics - DEV Community](https://dev.to/devactivity/unfreezing-your-github-actions-troubleshooting-stuck-deployments-and-protecting-your-git-repo-2adh)\n5. [GitHub Actions workflow stuck in \"queued\" state and cannot be cancelled · Issue #3872 · actions/runner](https://github.com/actions/runner/issues/3872)\n\nSynthesis:\nIf you receive a \"Failed to queue workflow run\" error, it typically indicates a syntax error in your YAML file, such as incorrect indentation or invalid keys [1]. Validate your workflow file using a YAML parser [1].\n\nIf the workflow is stuck in a \"Queued\" state, check for runner availability, label mismatches, concurrency limits, or pending approvals [2][3]. If the UI fails to cancel a stuck run, use the GitHub CLI to force-cancel it [4]:\n\n&#96;gh api -X POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel&#96; [4]\n\nHighlights:\n\u003cresult id=\"1\"\u003e\n\u003ctitle\u003ermkenv/quantag\u003c/title\u003e\n\u003curl\u003ehttps://github.com/rmkenv/quantag\u003c/url\u003e\n\u003ccontent\u003e| Problem | Fix |\n| --- | --- |\n| &#96;Permission denied&#96; on git push |\n[...]\n→ Actions → General → Workflow permissions → Read and write |\n| &#96;No\n[...]\nseasons&#96; in log | Normal outside growing season. Corn/cotton start April/May. |\n| &#96;No S2 scenes found&#96; | Cloud cover \u003e80% that day — monitor picks up next clear day automatically |\n| Job killed after ~3 min (exit 143) | Out of memory — resolution overrides in &#96;COMMODITY_RESOLUTION&#96; dict handle this automatically |\n| &#96;RasterioIOError: not a supported format&#96; | SAS token expiry — fixed by &#96;pc.sign()&#96; re-sign in &#96;quantagri_spectral_velocity_pc.py&#96; |\n| Duplicate rows in CSV | Fixed — merge step deduplicates by commodity + region + date |\n| &#96;Failed to queue workflow run&#96; | YAML syntax error — validate with &#96;python3 -c \"import yaml; yaml.safe_load(open('file.yml'))\"&#96; |\n| Historical job times out | Re-run — resumes from where it left off, skips completed season-years |\n| Z-scores all blank in analysis | Run historical workflow first to build the baseline |\n| &#96;yield_surprise&#96; blank | Add current season year rows to &#96;official_yields.csv&#96; with forecast values |\n| ML models all show NEUTRAL | Needs 3+ seasons per commodity — run historical workflow first |\n| &#96;lightgbm&#96; not found in ML step | Added to workflow install step — re-run the daily workflow to pick up |\n[...]\n| &#96;ImportError: attempted relative import with no known parent package&#96; | PYTHONPATH must be set to &#96;${{ github.workspace }}/quantagri/ml&#96; (not just &#96;quantagri&#96;) in the Train and Scorecard workflow steps |\n| Workflow not running at scheduled time | GitHub delays scheduled runs up to 30 min under load |\n| &#96;fatal: pathspec 'ml_models/' did not match any files&#96; | Create &#96;ml_models/.gitkeep&#96; in repo root — the commit step now handles this automatically |\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"2\"\u003e\n\u003ctitle\u003eFix GitHub Actions Workflow Stuck in 'Queued' | DevOpsil\u003c/title\u003e\n\u003curl\u003ehttps://devopsil.com/articles/2026-03-30-github-actions-workflow-stuck-queued-fix\u003c/url\u003e\n\u003ccontent\u003eYou push a commit or trigger a workflow, and the GitHub Actions run shows \"Queued\" indefinitely. The job never picks up a runner and the status spinner keeps spinning with no progress.\n[...]\nA workflow stays queued when no runner is available to execute it. The most common causes are:\n[...]\n1. Self-hosted runner is offline. The runner machine is stopped, the runner service crashed, or the runner lost connectivity.\n2. Label mismatch. The job requests&#96;runs-on: custom-label&#96; but no registered runner has that label.\n3. Concurrency limits hit. Your plan's concurrent job limit is reached, or a&#96;concurrency&#96; group is blocking the run.\n4. GitHub-hosted runner capacity. Rare, but GitHub occasionally has capacity issues for specific runner types (especially macOS or large runners).\n5. Required approvals. Workflows from fork PRs or first-time contributors require manual approval.\n[...]\n### 1. Check if approval is required\n[...]\n### 2. Verify self-hosted runner status\n[...]\nGo to Settings \u003e Actions \u003e Runners and check the runner status:\n[...]\n### 3. Verify runner labels match\n[...]\nCompare the&#96;runs-on&#96; value in your workflow with the runner's assigned labels:\n[...]\nThe runner must have ALL listed labels. Check in the repository settings or via the API:\n[...]\nmismatch by updating either the\n[...]\n### 4. Check concurrency groups\n[...]\nIf your workflow uses concurrency groups, a pending run may be waiting for a previous run to complete:\n[...]\nWith&#96;cancel-in-progress: false&#96;, new runs queue behind the active one. Check the Actions tab for an in-progress run in the same group. Either wait for it to finish or cancel it:\n[...]\ngh run cancel \u003crun-id\u003e\n[...]\n### 5. Check your plan's concurrency limits\n[...]\nGitHub plans have concurrent job limits:\n[...]\nCheck how many jobs are currently running:\n[...]\n### 6. Re-run the workflow\n[...]\nIf the runner is healthy but the job is still stuck (possibly a transient GitHub issue):\n[...]\n&#96;&#96;&#96;bash\ngh run rerun \u003crun-id\u003e\n\n&#96;&#96;&#96;\n[...]\nqueue pileups\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"3\"\u003e\n\u003ctitle\u003eTroubleshooting GitHub Action Jobs: Stuck in Queued State, Never Running \u0026 Automatically Failing Despite No System Downtime — tutorialpedia.org\u003c/title\u003e\n\u003curl\u003ehttps://www.tutorialpedia.org/blog/all-github-action-jobs-are-queued-and-never-running/\u003c/url\u003e\n\u003ccontent\u003e### Stuck in \"Queued\" State#\n[...]\nA job is marked as \"queued\" in the GitHub Actions UI (under the \"Actions\" tab) but shows no progress for an extended period (e.g., 30+ minutes). The job may display a message like \"Waiting for a runner to pick up this job\" but never transitions to \"in progress.\"\n[...]\n### Jobs Never Start Running#\n[...]\nAfter being queued, the job fails to move to the \"running\" state. This is distinct from being stuck in a queue—here, the job may appear \"active\" but shows no steps executing, or the runner never acknowledges the job.\n[...]\n### Automatically Failing Without Obvious Cause#\n[...]\nThe job fails immediately (within seconds) or after a short delay, but the logs are empty, vague, or lack actionable errors. Examples include:\n[...]\n- Failures\n[...]\nlike \"Job failed\" but\n[...]\n### Step 7: Check for Intermittent Failures \u0026 Retries#\n[...]\nFlaky network or service issues can cause intermittent failures. Add retry logic to steps:\n[...]\n&#96;&#96;&#96;\n- name: Retry flaky step  \n  uses: nick-invision/retry@v2  \n  with:  \n    max_attempts: 3  \n    retry_on: error  \n    command: ./flaky-script.sh  \n&#96;&#96;&#96;\n[...]\n- Windows:&#96;C:\\actions-runner\\_diag\\&#96; Look for errors like&#96;Failed to connect to GitHub&#96;(network issues) or&#96;Disk space low&#96;(resource constraints).\n- Linux:&#96;/home/runner/actions-runner/_diag/&#96;\n- Re-run the job. Debug logs will appear in the step output, revealing hidden errors (e.g., \"Failed to fetch action metadata\").\n[...]\n### Implement Retry Logic#\n[...]\nAdd retries to flaky steps using actions like nick-invision/retry or&#96;actions/retry&#96;.\n[...]\nGitHub Actions job issues—whether stuck in a queue, failing silently, or refusing to start—are rarely mysterious. By methodically checking resource limits, workflow configurations, runner health, and dependencies, you can resolve most problems quickly. Remember: prevention is key—optimize workflows, monitor runners, and stay updated on GitHub’s latest changes to keep your CI/CD pipeline running smoothly.\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"4\"\u003e\n\u003ctitle\u003eUnfreezing Your GitHub Actions: Troubleshooting Stuck Deployments and Protecting Your Git Repo Statistics - DEV Community\u003c/title\u003e\n\u003curl\u003ehttps://dev.to/devactivity/unfreezing-your-github-actions-troubleshooting-stuck-deployments-and-protecting-your-git-repo-2adh\u003c/url\u003e\n\u003ccontent\u003eOur discussion begins with a developer, Cubic-crypto, experiencing a persistent problem: a GitHub Actions workflow attempting to deploy to GitHub Pages remained \"queued\" for hours, failing to push edits from a Codespace. Attempts to cancel the run resulted in a frustrating \"Failed to cancel workflow\" error. This scenario, as highlighted by community member Gecko51, is a classic symptom of a broader GitHub Actions incident, where a runner is never assigned, leaving the workflow in a perpetual limbo. Such incidents can severely impact your team's productivity and throw off your meticulously tracked git repo statistics.\n[...]\nIf you've checked all the above and your workflow is still stuck with a \"Failed to cancel workflow\" error, it's highly likely you're caught in a GitHub Actions incident. This is where technical leadership needs to step in with more advanced troubleshooting, as outlined by Gecko51:\n[...]\n&#96;&#96;&#96;\n**Force-Cancel via API:** The UI cancel button is often ineffective when a runner was never assigned. Instead, use the GitHub CLI to force-cancel the run. Replace &#96;{owner}&#96;, &#96;{repo}&#96;, and &#96;{run_id}&#96; with your specific values. The run ID is visible in the URL of the stuck workflow.\n    &#96;gh api -X POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel&#96;\n[...]\n- **Disable and Re-enable Actions:** If the force-cancel doesn't work, a more drastic but often effective measure is to temporarily disable and then re-enable GitHub Actions for your repository. Navigate to &#96;Settings \u003e Actions \u003e General&#96;, disable, save, then toggle back on. This clears the queued state for your repo.\n[...]\nPush an Empty\n[...]\nRetrigger:**\n[...]\nthe GitHub Status page shows green\n[...]\nare unstuck\n[...]\nkick off a clean deploy.\n[...]\nensures a fresh workflow run without introducing new code changes:\n    git commit --allow-empty -m \"retrigger pages deploy\"\n[...]\nAvoid Pushing\n[...]\ndo not keep pushing\n[...]\nget caught in the incident, prolonging your recovery time.\u003c/content\u003e\n\u003c/result\u003e\n\n\u003cresult id=\"5\"\u003e\n\u003ctitle\u003eGitHub Actions workflow stuck in \"queued\" state and cannot be cancelled · Issue #3872 · actions/runner\u003c/title\u003e\n\u003curl\u003ehttps://github.com/actions/runner/issues/3872\u003c/url\u003e\n\u003ccontent\u003e# Issue: actions/runner #3872\n\n- Repository: actions/runner | The Runner for GitHub Actions :rocket: | 6K stars | C#\n\n## GitHub Actions workflow stuck in \"queued\" state and cannot be cancelled\n\n- Author: [@Baptiste44110](https://github.com/Baptiste44110)\n- State: open\n- Labels: bug\n- Reactions: 👍 15\n- Created: 2025-05-26T11:30:13Z\n- Updated: 2025-05-29T15:25:32Z\n\nHello GitHub Support,\n\nI'm encountering an issue where my workflow is stuck in the &#96;queued&#96; state for over an hour. This is a public repository, and I am not part of any GitHub organization.\n\nAttempts to cancel the workflow fail with the error: &#96;Failed to cancel workflow&#96;.\n\nThis issue started recently — previously, workflows would run immediately under the same setup. I've verified:\n\n- GitHub Actions system status shows no reported incidents.\n- My YAML workflow file hasn't changed.\n- I'm using only the default GitHub-hosted runners.\n\nWould you be able to investigate what's causing the blockage or help manually cancel the run?\n\nThanks in advance!\n\n---\n\n### Timeline\n\n**Baptiste44110** added label &#96;bug&#96; · May 26, 2025 at 11:30am\n\n**@phracek** commented · May 27, 2025 at 8:20am · edited\n\n\u003e See e.g. here https://github.com/sclorg/betka/actions/runs/15270059850/job/42943356222\n\u003e \n\u003e I used ubuntu-latest. It does not work for GitHub organization as well.\n\n**phracek** mentioned this in PR [#147: Do not use dist-git at all. Use GitLab directly](https://github.com/sclorg/betka/pull/147) · May 27, 2025 at 8:38am\n\n**@RealChuan** commented · May 29, 2025 at 2:18am\n\n\u003e I also encountered this problem.https://github.com/RealChuan/Qt-Graphics/actions/runs/15248567498\n\n**@pgodinhofortis** commented · May 29, 2025 at 3:25pm\n\n\u003e This happens, use the Force Cancel API to cancel the job\n\u003e \n\u003e https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#force-cancel-a-workflow-run\u003c/content\u003e\n\u003c/result\u003e",
+      "title": "Web search results"
+    }
+  ],
+  "rejected": false
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_search"><details>
+<summary>Tool use: **web_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://www.githubstatus.com/api/v2/status.json"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"page\":{\"id\":\"kctbh9vrtdwd\",\"name\":\"GitHub\",\"url\":\"https://www.githubstatus.com\",\"time_zone\":\"Etc/UTC\",\"updated_at\":\"2026-05-26T11:20:43.789Z\"},\"status\":{\"indicator\":\"major\",\"description\":\"Partial System Outage\"}}",
+  "url": "https://www.githubstatus.com/api/v2/status.json"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+GitHub experienced a partial system outage on May 26, 2026, which may be the cause of the issue.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://www.githubstatus.com/api/v2/summary.json"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"page\":{\"id\":\"kctbh9vrtdwd\",\"name\":\"GitHub\",\"url\":\"https://www.githubstatus.com\",\"time_zone\":\"Etc/UTC\",\"updated_at\":\"2026-05-26T11:20:43.789Z\"},\"components\":[{\"id\":\"8l4ygp009s5s\",\"name\":\"Git Operations\",\"status\":\"operational\",\"created_at\":\"2017-01-31T20:05:05.370Z\",\"updated_at\":\"2026-05-11T14:33:52.775Z\",\"position\":1,\"description\":\"Performance of git clones, pulls, pushes, and associated operations\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"4230lsnqdsld\",\"name\":\"Webhooks\",\"status\":\"operational\",\"created_at\":\"2019-11-13T18:00:24.256Z\",\"updated_at\":\"2026-05-12T16:28:53.697Z\",\"position\":2,\"description\":\"Real time HTTP callbacks of user-generated and system events\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"0l2p9nhqnxpd\",\"name\":\"Visit www.githubstatus.com for more information\",\"status\":\"operational\",\"created_at\":\"2018-12-05T19:39:40.838Z\",\"updated_at\":\"2025-03-19T05:00:21.309Z\",\"position\":3,\"description\":null,\"showcase\":false,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"brv1bkgrwx7q\",\"name\":\"API Requests\",\"status\":\"operational\",\"created_at\":\"2017-01-31T20:01:46.621Z\",\"updated_at\":\"2026-03-11T15:02:23.656Z\",\"position\":4,\"description\":\"Requests for GitHub APIs\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"kr09ddfgbfsf\",\"name\":\"Issues\",\"status\":\"operational\",\"created_at\":\"2017-01-31T20:01:46.638Z\",\"updated_at\":\"2026-05-04T16:34:14.268Z\",\"position\":5,\"description\":\"Requests for Issues on GitHub.com\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"hhtssxt0f5v2\",\"name\":\"Pull Requests\",\"status\":\"operational\",\"created_at\":\"2020-09-02T15:39:06.329Z\",\"updated_at\":\"2026-05-06T19:04:36.005Z\",\"position\":6,\"description\":\"Requests for Pull Requests on GitHub.com\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"br0l2tvcx85d\",\"name\":\"Actions\",\"status\":\"major_outage\",\"created_at\":\"2019-11-13T18:02:19.432Z\",\"updated_at\":\"2026-05-26T11:19:04.531Z\",\"position\":7,\"description\":\"Workflows, Compute and Orchestration for GitHub Actions\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"st3j38cctv9l\",\"name\":\"Packages\",\"status\":\"operational\",\"created_at\":\"2019-11-13T18:02:40.064Z\",\"updated_at\":\"2026-05-04T16:28:59.033Z\",\"position\":8,\"description\":\"API requests and webhook delivery for GitHub Packages\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"vg70hn9s2tyj\",\"name\":\"Pages\",\"status\":\"degraded_performance\",\"created_at\":\"2017-01-31T20:04:33.923Z\",\"updated_at\":\"2026-05-26T10:57:13.955Z\",\"position\":9,\"description\":\"Frontend application and API servers for Pages builds\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"pjmpxvq2cmr2\",\"name\":\"Copilot\",\"status\":\"operational\",\"created_at\":\"2022-06-21T16:04:33.017Z\",\"updated_at\":\"2026-04-23T17:03:00.903Z\",\"position\":10,\"description\":null,\"showcase\":true,\"start_date\":\"2022-06-21\",\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"h2ftsgbw7kmk\",\"name\":\"Codespaces\",\"status\":\"operational\",\"created_at\":\"2021-08-11T16:02:09.505Z\",\"updated_at\":\"2026-05-04T16:35:03.535Z\",\"position\":11,\"description\":\"Orchestration and Compute for GitHub Codespaces\",\"showcase\":true,\"start_date\":\"2021-08-11\",\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"cnnb39dkkk82\",\"name\":\"Copilot AI Model Providers\",\"status\":\"operational\",\"created_at\":\"2026-04-17T12:33:08.827Z\",\"updated_at\":\"2026-04-17T12:33:08.827Z\",\"position\":12,\"description\":null,\"showcase\":true,\"start_date\":\"2026-04-17\",\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false}],\"incidents\":[{\"id\":\"gnftqj9htp0g\",\"name\":\"Incident with Actions and Pages\",\"status\":\"investigating\",\"created_at\":\"2026-05-26T10:57:13.848Z\",\"updated_at\":\"2026-05-26T11:19:04.637Z\",\"monitoring_at\":null,\"resolved_at\":null,\"impact\":\"critical\",\"shortlink\":\"https://stspg.io/6gzfzr1dx684\",\"started_at\":\"2026-05-26T10:57:13.830Z\",\"page_id\":\"kctbh9vrtdwd\",\"incident_updates\":[{\"id\":\"jxwqbs3qwxx6\",\"status\":\"investigating\",\"body\":\"Actions is experiencing degraded availability. We are continuing to investigate.\",\"incident_id\":\"gnftqj9htp0g\",\"created_at\":\"2026-05-26T11:19:04.631Z\",\"updated_at\":\"2026-05-26T11:19:04.631Z\",\"display_at\":\"2026-05-26T11:19:04.631Z\",\"affected_components\":[{\"code\":\"vg70hn9s2tyj\",\"name\":\"Pages\",\"old_status\":\"degraded_performance\",\"new_status\":\"degraded_performance\"},{\"code\":\"br0l2tvcx85d\",\"name\":\"Actions\",\"old_status\":\"degraded_performance\",\"new_status\":\"major_outage\"}],\"deliver_notifications\":true,\"custom_tweet\":null,\"tweet_id\":null},{\"id\":\"pkvpg93l743t\",\"status\":\"investigating\",\"body\":\"We are investigating reports of degraded performance for Actions and Pages\",\"incident_id\":\"gnftqj9htp0g\",\"created_at\":\"2026-05-26T10:57:14.019Z\",\"updated_at\":\"2026-05-26T10:57:14.019Z\",\"display_at\":\"2026-05-26T10:57:14.019Z\",\"affected_components\":[{\"code\":\"vg70hn9s2tyj\",\"name\":\"Pages\",\"old_status\":\"operational\",\"new_status\":\"degraded_performance\"},{\"code\":\"br0l2tvcx85d\",\"name\":\"Actions\",\"old_status\":\"operational\",\"new_status\":\"degraded_performance\"}],\"deliver_notifications\":true,\"custom_tweet\":null,\"tweet_id\":null}],\"components\":[{\"id\":\"br0l2tvcx85d\",\"name\":\"Actions\",\"status\":\"major_outage\",\"created_at\":\"2019-11-13T18:02:19.432Z\",\"updated_at\":\"2026-05-26T11:19:04.531Z\",\"position\":7,\"description\":\"Workflows, Compute and Orchestration for GitHub Actions\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false},{\"id\":\"vg70hn9s2tyj\",\"name\":\"Pages\",\"status\":\"degraded_performance\",\"created_at\":\"2017-01-31T20:04:33.923Z\",\"updated_at\":\"2026-05-26T10:57:13.955Z\",\"position\":9,\"description\":\"Frontend application and API servers for Pages builds\",\"showcase\":true,\"start_date\":null,\"group_id\":null,\"page_id\":\"kctbh9vrtdwd\",\"group\":false,\"only_show_if_degraded\":false}],\"reminder_intervals\":null}],\"scheduled_maintenances\":[],\"status\":{\"indicator\":\"major\",\"description\":\"Partial System Outage\"}}",
+  "url": "https://www.githubstatus.com/api/v2/summary.json"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?status=in_progress\u0026per_page=10"
+}
+```
+Additional data:
+
+```json
+{
+  "reviewData": {
+    "isShowingInput": false,
+    "selectedOption": "run",
+    "status": "Done"
+  }
+}
+```
+Result:
+
+```json
+{
+  "markdown": "{\"total_count\":0,\"workflow_runs\":[]}",
+  "url": "https://api.github.com/repos/AV77web/magricambi/actions/runs?status=in_progress\u0026per_page=10"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Perfect! This is the root cause.</details></think>
+
+_**Agent (default)**_
+
+Il messaggio **"Failed to queue workflow run. Please try again"** in questo momento **non dipende dal tuo `deploy.yml` né dal passaggio a `magricambi`**: è GitHub Actions che non riesce ad accodare i run.
+
+## Causa principale: incidente GitHub (oggi)
+
+Su [githubstatus.com](https://www.githubstatus.com/) risulta:
+
+- **Actions** → **major outage** (guasto grave)
+- Incidente: *"Incident with Actions and Pages"* — in investigazione dalle **10:57 UTC** (~12:57 ora italiana)
+
+Questo spiega tutto:
+
+| Cosa vedi | Perché |
+|-----------|--------|
+| Commit ok su GitHub | Git Operations funziona |
+| Nessun run dopo le 13:17 di ieri | Da oggi ~11:00 UTC Actions è fuori uso |
+| Run manuale → "Failed to queue" | GitHub non accoda nemmeno i workflow |
+| Permessi "Allow all actions" corretti | Il problema non è la tua configurazione |
+
+Non serve modificare il repository finché l’incidente non è risolto.
+
+---
+
+## Cosa fare adesso
+
+1. Controlla **https://www.githubstatus.com/** — quando **Actions** torna **Operational**, riprova.
+2. **Actions** → **Deploy to VPS** → **Run workflow** (branch `main`).
+3. Oppure:
+   ```bash
+   git commit --allow-empty -m "retrigger deploy dopo fix GitHub"
+   git push origin main
+   ```
+
+Se dopo il ripristino di GitHub ancora non parte, passa ai controlli sotto.
+
+---
+
+## Se dopo il ripristino GitHub ancora non funziona
+
+1. **Settings** → **Actions** → **General**  
+   - Disabilita Actions → Save  
+   - Riabilita **Allow all actions** → Save  
+
+2. **Workflow permissions** → **Read and write permissions** → Save  
+
+3. Verifica i segreti: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`  
+   (se mancano il run **parte** ma il deploy SSH fallisce — non dà "Failed to queue")
+
+4. Controlla run bloccati in **Actions** e cancellali se restano in "Queued"
+
+---
+
+## Il tuo workflow
+
+Il file `deploy.yml` è valido e il workflow risulta **active** su GitHub. Non serve cambiarlo per questo errore.
+
+---
+
+**In sintesi:** permessi ok, repo ok, workflow ok. Oggi GitHub Actions ha un **disservizio globale** → "Failed to queue" è atteso. Riprova tra qualche ora quando su githubstatus.com Actions è di nuovo verde.
+
+---
+
+_**User**_
+
+se provo da setting di github a modificare le secrets variable non ho i nome delle tre variabili (VPS:HOST, VPS_SSH_KEY, VPS:USER), ma il contenuto è nascosto
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to know why the names of their GitHub Actions secrets (VPS_HOST, VPS_SSH_KEY, VPS_USER) are not visible when viewing settings, though the content remains hidden.
+
+GitHub secrets are designed to be write-only after creation, so you can see the names but never the values. Secret names appear in Settings  Secrets and variables  Actions  Repository secrets, but the actual values remain hidden for security. If you can't see the names, check if you're looking in the correct location, verify whether the secrets were created on the correct repository (e.g., magricambi1 vs magricambi), confirm if they're stored as environment secrets instead of repository secrets, or ensure the list isn't empty.</details></think>
+
+_**Agent (default)**_
+
+Su GitHub è **normale** che non si possa vedere il **contenuto** dei secrets: dopo il salvataggio i valori non sono più leggibili (né da te né da GitHub nell’interfaccia). Si possono solo **sostituire** o **eliminare e ricreare**.
+
+## Cosa dovresti vedere
+
+In **Settings** → **Secrets and variables** → **Actions** → tab **Secrets**:
+
+| Colonna | Visibile? |
+|---------|-----------|
+| **Nome** (es. `VPS_HOST`) | Sì |
+| **Valore** | No (mai, per sicurezza) |
+| Data ultimo aggiornamento | Sì |
+
+I nomi nel workflow devono essere **esattamente** questi (con underscore `_`, non i due punti `:`):
+
+```
+VPS_HOST
+VPS_USER
+VPS_SSH_KEY
+```
+
+Nel tuo `deploy.yml` sono referenziati così:
+
+```yaml
+host: ${{ secrets.VPS_HOST }}
+username: ${{ secrets.VPS_USER }}
+key: ${{ secrets.VPS_SSH_KEY }}
+```
+
+---
+
+## Se non vedi i nomi nella lista
+
+Allora i secrets **non ci sono** (o stai guardando il posto sbagliato):
+
+1. Repo corretto: **https://github.com/AV77web/magricambi** (non un altro repo).
+2. Tab **Secrets**, non solo **Variables** (sono due sezioni diverse).
+3. Dopo il rename da `magricambi1` di solito restano sullo stesso repo; se la lista è vuota, **ricreali**.
+
+### Come ricrearli
+
+Clic **New repository secret** per ciascuno:
+
+| Nome | Cosa mettere |
+|------|----------------|
+| `VPS_HOST` | IP o dominio della VPS (es. `123.45.67.89`) |
+| `VPS_USER` | Utente SSH (es. `root`) |
+| `VPS_SSH_KEY` | Chiave **privata** SSH completa, inclusi `-----BEGIN ...-----` e `-----END ...-----` |
+
+Per `VPS_SSH_KEY`: copia tutto il file della chiave privata (es. `id_rsa`), con gli a capo originali.
+
+---
+
+## “Contenuto nascosto” quando modifichi
+
+Se clicchi **Update** su un secret esistente:
+
+- il campo valore è **vuoto** (non mostra il vecchio valore);
+- devi **incollare di nuovo** il valore completo e salvare.
+
+Non è un bug: è il comportamento previsto.
+
+---
+
+## Verifica rapida che i nomi siano giusti
+
+Dopo aver creato i tre secrets, nella lista dovresti vedere **solo i nomi**, ad esempio:
+
+```
+VPS_HOST      Updated X minutes ago
+VPS_USER      Updated X minutes ago
+VPS_SSH_KEY   Updated X minutes ago
+```
+
+Se vedi altri nomi (typo, spazi, `VPS:HOST` con `:`) il deploy fallirà perché `${{ secrets.VPS_HOST }}` non trova nulla.
+
+---
+
+## Quando GitHub Actions torna operativo
+
+Dopo che [githubstatus.com](https://www.githubstatus.com/) segna **Actions** come ok:
+
+1. Controlla che i 3 secrets ci siano con i nomi sopra.
+2. **Actions** → **Deploy to VPS** → **Run workflow**.
+
+Se il job **deploy** fallisce su SSH, il problema sarà valore di host/user/key, non i nomi nascosti.
+
+Se vuoi, dopo che hai ricreato i secrets descrivi cosa vedi nella lista (solo i **nomi**, mai i valori) e ti dico se è allineato al workflow.
+
+---
+
+_**User**_
+
+le tre secrets ci sono e con i nome che ti ho detto prima. Porvo a eliminarle e a reinserirle?
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user inquires whether they should delete and re-add the three GitHub secrets: VPS_HOST, VPS_USER, and VPS_SSH_KEY.</details></think>
+
+_**Agent (default)**_
+
+Sì, **puoi eliminarle e reinserirle**: è un’operazione normale e spesso utile se sospetti valori sbagliati o una chiave SSH corrotta (spazi/caratteri mancanti).
+
+## Prima di eliminare
+
+Tieni pronti i valori corretti:
+
+| Secret | Cosa preparare |
+|--------|----------------|
+| `VPS_HOST` | IP o hostname della VPS |
+| `VPS_USER` | es. `root` |
+| `VPS_SSH_KEY` | intero file della **chiave privata** (da `-----BEGIN` a `-----END`) |
+
+Per la chiave SSH: apri il file locale (es. `id_rsa`), copia **tutto**, inclusi gli a capo.
+
+---
+
+## Procedura
+
+1. **Settings** → **Secrets and variables** → **Actions** → **Secrets**
+2. Per ognuno: **Remove** → conferma
+3. **New repository secret** → nome esatto → incolla valore → **Add secret**
+4. Ripeti per tutti e tre
+
+I nomi devono essere identici (maiuscole/minuscole incluse):
+
+- `VPS_HOST`
+- `VPS_USER`
+- `VPS_SSH_KEY`
+
+---
+
+## Attenzione
+
+- **Non** risolve da solo *"Failed to queue workflow run"* se GitHub Actions è ancora in outage: in quel caso aspetta che [githubstatus.com](https://www.githubstatus.com/) segni Actions come operativo.
+- Dopo il reinserimento, fai **Run workflow** o un push su `main` per provare.
+- Se il run **parte** ma il job **deploy** fallisce, il problema è host/user/key o la VPS (firewall, `authorized_keys`, path `git pull`).
+
+---
+
+## Verifica sulla VPS (opzionale)
+
+La chiave pubblica corrispondente alla privata che metti in `VPS_SSH_KEY` deve essere in:
+
+```text
+~/.ssh/authorized_keys
+```
+
+dell’utente usato in `VPS_USER`.
+
+---
+
+In sintesi: **sì, elimina e ricrea** se vuoi essere sicuro dei valori; i nomi che hai sono corretti. Quando Actions funziona di nuovo, un run manuale ti dirà subito se SSH e deploy vanno a buon fine.
+
+---
+
+_**User**_
+
+la chiave pubblica è presente in root/.ssh/authorized_keys
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user confirms the public key exists in root/.ssh/authorized_keys on their VPS.</details></think>
+
+_**Agent (default)**_
+
+La posizione è corretta se in `deploy.yml` usi `VPS_USER` = `root`:
+
+```text
+/root/.ssh/authorized_keys
+```
+
+## Collegamento chiavi
+
+| Dove | Cosa |
+|------|------|
+| VPS → `/root/.ssh/authorized_keys` | Chiave **pubblica** |
+| GitHub secret `VPS_SSH_KEY` | Chiave **privata** corrispondente |
+
+Devono essere una coppia (es. stesso file generato con `ssh-keygen`).
+
+---
+
+## Permessi sulla VPS (spesso causa di fallimento SSH)
+
+Sulla VPS, come `root`:
+
+```bash
+chmod 700 /root/.ssh
+chmod 600 /root/.ssh/authorized_keys
+chown -R root:root /root/.ssh
+```
+
+---
+
+## Test da PC (prima di GitHub Actions)
+
+```bash
+ssh -i percorso\alla\chiave_privata root@IP_DELLA_VPS
+```
+
+Se qui entri senza password, anche Actions dovrebbe poterlo fare (con la stessa privata in `VPS_SSH_KEY`).
+
+---
+
+## Altri controlli utili
+
+1. **`VPS_HOST`** — IP o dominio raggiungibile da internet (porta **22** aperta sul firewall della VPS).
+2. **`VPS_SSH_KEY`** — tutta la privata, una riga `BEGIN` / `END`, niente spazi extra all’inizio/fine.
+3. Dopo il reinserimento dei secrets, prova il deploy solo quando **Actions** su githubstatus.com è operativo.
+
+---
+
+In sintesi: `authorized_keys` su root è giusto. Assicurati che in GitHub ci sia la **privata** gemella, con permessi `700`/`600` su `.ssh`, e testa `ssh root@host` dal PC. Se quello funziona, il problema del deploy non è `authorized_keys` ma outage Actions, secrets sbagliati o lo script (`git pull` / `docker compose`) dopo la connessione SSH.
+
+---
+
+_**User**_
+
+in githubstatus c'è ancora GitHub header
+Incident with Actions and PagesSubscribe
+Update - We are investigating authentication issues leading to failure in starting Actions runs and downloading actions. At this time the majority of Actions runs is impacted.
+May 26, 2026 - 11:53 UTC
+Update - Actions is experiencing degraded availability. We are continuing to investigate.
+May 26, 2026 - 11:19 UTC
+Investigating - We are investigating reports of degraded performance for Actions and Pages
+May 26, 2026 - 10:57 UTC
+
+
+---
+
+_**Agent (default)**_
+
+Quell’aggiornamento conferma che **il problema non è il tuo progetto**, ma un **disservizio globale di GitHub Actions**.
+
+## Cosa significa per te
+
+| Sintomo che vedi | Spiegazione |
+|------------------|-------------|
+| Nessun run sui push recenti | GitHub non riesce ad avviare i workflow |
+| "Failed to queue workflow run" | Non accoda nemmeno i run manuali |
+| Secrets / SSH ok ma deploy non parte | Normale finché Actions è giù |
+
+L’ultimo messaggio (**11:53 UTC**) parla esplicitamente di **problemi di autenticazione** che impediscono di **avviare** i run e **scaricare** le actions (`actions/checkout`, `appleboy/ssh-action`, ecc.). Quindi anche con secrets e `authorized_keys` corretti **non puoi fare nulla lato repo** finché non risolvono l’incidente.
+
+---
+
+## Cosa fare adesso
+
+1. **Aspetta** che su [githubstatus.com](https://www.githubstatus.com/) **Actions** torni verde (Operational).
+2. **Non** cambiare ancora altro (deploy.yml, secrets, Docker): non è la causa.
+3. Quando è risolto:
+   - **Actions** → **Deploy to VPS** → **Run workflow**
+   - oppure `git push origin main`
+
+---
+
+## Nel frattempo (opzionale)
+
+Se devi aggiornare la VPS **subito**, senza Actions:
+
+```bash
+ssh root@IP_VPS
+cd /root/magricambi
+git pull --ff-only
+docker compose up -d --build
+```
+
+È lo stesso che farebbe il workflow, eseguito a mano.
+
+---
+
+**In sintesi:** finché c’è l’incidente *"Incident with Actions and Pages"*, il deploy automatico **non partirà** — non è colpa tua. Riprova quando GitHub dichiara il problema risolto; se poi un run parte ma fallisce, lì si guarda il log (SSH, `git pull`, Docker).
+
+---
+
+_**User**_
+
+cosa faa git pull --ff-only? 
+
+---
+
+_**Agent (default)**_
+
+`git pull --ff-only` fa due cose in sequenza, ma **solo se è sicuro**:
+
+## 1. `git pull`
+Scarica dal remote (es. GitHub) i commit nuovi e li integra nel branch locale sulla VPS.
+
+Equivalente a:
+```bash
+git fetch
+git merge   # (o rebase, a seconda della config)
+```
+
+## 2. `--ff-only` (fast-forward only)
+Permette l’aggiornamento **solo** se il tuo branch locale può “avanzare in linea retta” senza creare un merge commit.
+
+```
+Prima (ok per --ff-only):
+
+  A --- B --- C   origin/main
+              \
+               D   main (sulla VPS, indietro di qualche commit)
+
+Dopo git pull --ff-only:
+
+  A --- B --- C --- ... nuovi commit   main = origin/main
+```
+
+Se sulla VPS hai **commit locali** che non sono su GitHub, oppure storie divergenti:
+
+```
+  origin/main:  A --- B --- C --- E
+  main locale:  A --- B --- D
+```
+
+allora **`git pull --ff-only` fallisce** con un errore tipo:
+`fatal: Not possible to fast-forward, aborting.`
+
+Così **non** fa un merge automatico che potrebbe sporcare il server.
+
+---
+
+## Perché è nel deploy
+
+Nel workflow sulla VPS vuoi solo:
+
+> “Metti il codice uguale a quello su GitHub”
+
+Non vuoi merge strani sul server. Se qualcuno ha modificato file a mano sulla VPS e fatto commit, il deploy si ferma invece di mescolare tutto.
+
+---
+
+## Confronto rapido
+
+| Comando | Comportamento |
+|---------|----------------|
+| `git pull` | Aggiorna; può fare merge se serve |
+| `git pull --ff-only` | Aggiorna solo se non serve merge; altrimenti errore |
+| `git pull --rebase` | Ripplica i tuoi commit sopra quelli remoti |
+
+---
+
+**In sintesi:** `git pull --ff-only` = “scarica da GitHub e allinea il branch, ma **solo** se la VPS non ha commit propri che creerebbero conflitti”. È una scelta prudente per un server di produzione.
+
+---
+
+_**User**_
+
+C:\Users\villa\.ssh>ssh vps
+Welcome to Ubuntu 26.04 LTS (GNU/Linux 7.0.0-14-generic x86_64)
+
+ * Documentation:  https://docs.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue May 26 12:08:09 UTC 2026
+
+  System load:  0.0                 Processes:             161
+  Usage of /:   16.8% of 115.25GB   Users logged in:       0
+  Memory usage: 51%                 IPv4 address for ens6: 217.160.47.95
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+10 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+root@ubuntu:~# l
+app/  magricambi/  n8n/
+root@ubuntu:~# cd magricambi/
+root@ubuntu:~/magricambi# git pull --ff-only
+soremote: Enumerating objects: 61, done.
+remote: Counting objects: 100% (61/61), done.
+remote: Compressing objects: 100% (29/29), done.
+remote: Total 50 (delta 18), reused 46 (delta 14), pack-reused 0 (from 0)
+Unpacking objects: 100% (50/50), 46.78 KiB | 2.34 MiB/s, done.
+From https://github.com/AV77web/magricambi
+   eb6a56f..ad53f4b  main       -> origin/main
+Updating eb6a56f..ad53f4b
+Fast-forward
+ .cursorindexingignore                                                      |    3 +
+ .github/workflows/deploy.yml                                               |    5 +-
+ .gitignore                                                                 |    3 +-
+ .specstory/.project.json                                                   |    7 +
+ .specstory/cli/config.toml                                                 |   82 ++
+ .../history/2026-04-26_20-26-49Z-comando-per-eseguire-il-programma.md      |  167 +++
+ .../history/2026-04-28_09-45-54Z-installazione-di-mysql-in-docker.md       |  979 ++++++++++++++++
+ .../history/2026-04-28_13-13-46Z-analisi-del-componente-articlelist.jsx.md |  509 +++++++++
+ .../2026-04-28_13-55-14Z-refactoring-project-for-typescript-and-next.js.md | 1312 +++++++++++++++++++++
+ ...8-14Z-nel-mio-docker-descktop-ho-un-conatiner-magricacmbi-e-un'allro.md | 2006 +++++++++++++++++++++++++++++++++
+ .specstory/statistics.json                                                 |   49 +
+ .vscode/settings.json                                                      |    3 +
+ eslint.config.mjs                                                          |   16 +
+ git                                                                        |    0
+ package-lock.json                                                          |  277 ++++-
+ package.json                                                               |    4 +
+ src/lib/db/connection.ts                                                   |   68 ++
+ src/lib/db/index.ts                                                        |    1 +
+ src/types/next-auth.d.ts                                                   |   22 +
+ src/types/user.ts                                                          |   11 +
+ 20 files changed, 5517 insertions(+), 7 deletions(-)
+ create mode 100644 .cursorindexingignore
+ create mode 100644 .specstory/.project.json
+ create mode 100644 .specstory/cli/config.toml
+ create mode 100644 .specstory/history/2026-04-26_20-26-49Z-comando-per-eseguire-il-programma.md
+ create mode 100644 .specstory/history/2026-04-28_09-45-54Z-installazione-di-mysql-in-docker.md
+ create mode 100644 .specstory/history/2026-04-28_13-13-46Z-analisi-del-componente-articlelist.jsx.md
+ create mode 100644 .specstory/history/2026-04-28_13-55-14Z-refactoring-project-for-typescript-and-next.js.md
+ create mode 100644 .specstory/history/2026-05-25_14-48-14Z-nel-mio-docker-descktop-ho-un-conatiner-magricacmbi-e-un'allro.md
+ create mode 100644 .specstory/statistics.json
+ create mode 100644 .vscode/settings.json
+ create mode 100644 eslint.config.mjs
+ create mode 100644 git
+ create mode 100644 src/lib/db/connection.ts
+ create mode 100644 src/lib/db/index.ts
+ create mode 100644 src/types/next-auth.d.ts
+ create mode 100644 src/types/user.ts
+root@ubuntu:~/magricambi# docker compose up -d --build
+[+] Building 0.1s (2/2) FINISHED
+ => [internal] load local bake definitions                                                                      0.0s
+ => => reading from stdin 478B                                                                                  0.0s
+ => [internal] load build definition from dockerfile                                                            0.0s
+ => => transferring dockerfile: 528B                                                                            0.0s
+[+] up 0/1
+ ⠙ Image magricambi-app Building                                                                                 0.2s
+failed to solve: failed to read dockerfile: read /var/lib/docker/tmp/buildkit-mount950675079/dockerfile: is a directory
+
+root@ubuntu:~/magricambi#
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user successfully executed `git pull` on the VPS, but `docker compose build` failed.
+
+The Docker build failed because the `dockerfile` path points to a directory instead of a file. This likely occurred because a folder named `dockerfile` (lowercase) was transferred via FileZilla, causing Docker to attempt to read it as a file rather</details></think>
