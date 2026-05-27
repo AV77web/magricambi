@@ -12,17 +12,31 @@ type LoginPageProps = {
 async function login(formData: FormData) {
   "use server";
 
+  const identifier = String(formData.get("identifier") ?? "").trim();
+
+  console.log("[login-page] Submit login ricevuto", {
+    hasIdentifier: Boolean(identifier),
+    hasPassword: Boolean(formData.get("password")),
+  });
+
   try {
     await signIn("credentials", {
-      identifier: formData.get("identifier"),
+      identifier,
       password: formData.get("password"),
       redirectTo: "/",
     });
   } catch (error) {
     if (error instanceof AuthError) {
+      console.log("[login-page] AuthError durante login", {
+        type: error.type,
+        cause: error.cause,
+      });
       redirect("/login?error=CredentialsSignin");
     }
 
+    console.error("[login-page] Errore inatteso durante login", {
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw error;
   }
 }

@@ -58,8 +58,15 @@ function getPool(): Pool {
 }
 
 export const db = new Proxy({} as Pool, {
-  get(_target, property, receiver) {
-    return Reflect.get(getPool(), property, receiver);
+  get(_target, property) {
+    const pool = getPool();
+    const value = Reflect.get(pool, property);
+
+    if (typeof value === "function") {
+      return value.bind(pool);
+    }
+
+    return value;
   },
 });
 
