@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { auth } from "@/src/auth";
-import SignOutButton from "@/src/components/auth/SignOutButton";
-import Navbar from "../components/Navbar";
 import "./globals.css";
 
 /** Stesse variabili CSS di globals.css; Geist non è disponibile in next/font su Next 14. */
@@ -26,15 +23,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <p className="bg-purple-700 text-white w-full text-center py-2">
           Sono del layout root
         </p>
-        {session?.user ? <Navbar actions={<SignOutButton />} /> : null}
           {children}
       </body>
     </html>

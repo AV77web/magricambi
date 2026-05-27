@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -52,51 +53,64 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const hasError = params?.error === "CredentialsSignin";
 
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-zinc-50 px-4 py-12">
-      <section className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
-        <div className="mb-6">
+    <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12">
+      <section className="w-full max-w-sm overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
+        <div className="relative h-48 w-full bg-zinc-100">
+          <Image
+            src="/images/Home.jpg"
+            alt="MagRicambi"
+            fill
+            priority
+            className="object-contain"
+            sizes="(max-width: 640px) 100vw, 384px"
+          />
+        </div>
+
+        <div className="p-6">
+          <div className="mb-6">
           <h1 className="text-2xl font-semibold text-zinc-950">Accesso</h1>
           <p className="mt-2 text-sm text-zinc-600">
             Entra in MagRicambi con utente o email.
           </p>
+          </div>
+
+          {hasError ? (
+            <p className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              Credenziali non valide oppure utente non attivo.
+            </p>
+          ) : null}
+
+          <form action={login} className="space-y-4">
+            <label className="block">
+              <span className="text-sm font-medium text-zinc-700">Utente o email</span>
+              <input
+                required
+                autoComplete="username"
+                name="identifier"
+                type="text"
+                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 outline-none transition-colors focus:border-zinc-900"
+              />
+            </label>
+
+            <label className="block">
+              <span className="text-sm font-medium text-zinc-700">Password</span>
+              <input
+                required
+                autoComplete="current-password"
+                name="password"
+                type="password"
+                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 outline-none transition-colors focus:border-zinc-900"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="w-full rounded-md bg-zinc-950 px-4 py-2 font-medium text-white transition-colors hover:bg-zinc-800"
+            >
+              Accedi
+            </button>
+          </form>
         </div>
-
-        {hasError ? (
-          <p className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-            Credenziali non valide oppure utente non attivo.
-          </p>
-        ) : null}
-
-        <form action={login} className="space-y-4">
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-700">Utente o email</span>
-            <input
-              required
-              autoComplete="username"
-              name="identifier"
-              type="text"
-              className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 outline-none transition-colors focus:border-zinc-900"
-            />
-          </label>
-
-          <label className="block">
-            <span className="text-sm font-medium text-zinc-700">Password</span>
-            <input
-              required
-              autoComplete="current-password"
-              name="password"
-              type="password"
-              className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-zinc-950 outline-none transition-colors focus:border-zinc-900"
-            />
-          </label>
-
-          <button
-            type="submit"
-            className="w-full rounded-md bg-zinc-950 px-4 py-2 font-medium text-white transition-colors hover:bg-zinc-800"
-          >
-            Accedi
-          </button>
-        </form>
       </section>
     </main>
   );

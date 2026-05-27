@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "@/src/auth";
+import SignOutButton from "@/src/components/auth/SignOutButton";
+import Navbar from "@/src/components/Navbar";
 
 export default async function ManagementLayout({
   children,
@@ -15,6 +17,7 @@ export default async function ManagementLayout({
 
   return (
     <div>
+      <Navbar actions={<SignOutButton />} />
       <header className="border-b border-zinc-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <div>
