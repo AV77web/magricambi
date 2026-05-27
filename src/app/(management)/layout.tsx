@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "@/src/auth";
-import SignOutButton from "@/src/components/auth/SignOutButton";
 
 export default async function ManagementLayout({
   children,
@@ -24,7 +23,6 @@ export default async function ManagementLayout({
               {session.user.utente}
             </p>
           </div>
-          <SignOutButton />
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
