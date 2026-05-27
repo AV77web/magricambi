@@ -72,13 +72,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12">
       <section className="w-full max-w-sm overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-        <div className="relative h-40 w-full bg-zinc-100">
+        <div className="relative aspect-[3/2] w-full bg-zinc-100">
           <Image
             src="/images/Home.jpg"
             alt="MagRicambi"
             fill
             priority
-            className="object-cover"
+            className="object-contain"
             sizes="(max-width: 640px) 100vw, 384px"
           />
         </div>
