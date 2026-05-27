@@ -6,9 +6,26 @@ import { auth, signIn } from "@/src/auth";
 
 type LoginPageProps = {
   searchParams?: Promise<{
+    callbackUrl?: string;
     error?: string;
   }>;
 };
+
+function getSafeRedirectTo(value: FormDataEntryValue | null): string {
+  const raw = String(value ?? "/");
+
+  if (raw.startsWith("/") && !raw.startsWith("//")) {
+    return raw;
+  }
+
+  try {
+    const parsed = new URL(raw);
+
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return "/";
+  }
+}
 
 async function login(formData: FormData) {
   "use server";
@@ -24,7 +41,7 @@ async function login(formData: FormData) {
     await signIn("credentials", {
       identifier,
       password: formData.get("password"),
-      redirectTo: "/",
+      redirectTo: getSafeRedirectTo(formData.get("callbackUrl")),
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -81,6 +98,12 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           ) : null}
 
           <form action={login} className="space-y-4">
+            <input
+              type="hidden"
+              name="callbackUrl"
+              value={params?.callbackUrl ?? "/"}
+            />
+
             <label className="block">
               <span className="text-sm font-medium text-zinc-700">Utente o email</span>
               <input
