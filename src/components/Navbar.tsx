@@ -5,7 +5,7 @@
 // @version: "1.0.0 2026-05-07"
 //====================================
 "use client"
-import { useState , MouseEvent} from "react";
+import { useState , MouseEvent, ReactNode} from "react";
 import Link from "next/link"; 
 
 interface NavLink {
@@ -34,7 +34,7 @@ const serviceLinks: ServiceLink[] = [
     
 ]
 
-export default function Navbar() {
+export default function Navbar({ actions }: { actions?: ReactNode }) {
     
         const [ isServicesOpen, setIsServicesOpen] = useState<boolean>(false);
 
@@ -56,7 +56,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Navigation */}
-                    <div className="flex space-x-8">
+                    <div className="flex items-center space-x-8">
 
                         {/* Link normali */}
                         {navLinks.map((link) => (
@@ -117,6 +117,12 @@ export default function Navbar() {
 
                         </div>
                     </div>
+
+                    {actions ? (
+                        <div className="flex items-center">
+                            {actions}
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </nav>
