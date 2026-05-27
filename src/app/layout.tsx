@@ -34,7 +34,7 @@ export default async function RootLayout({
         <p className="bg-purple-700 text-white w-full text-center py-2">
           Sono del layout root
         </p>
-        <Navbar actions={session?.user ? <SignOutButton /> : null} />
+        {session?.user ? <Navbar actions={<SignOutButton />} /> : null}
           {children}
       </body>
     </html>
