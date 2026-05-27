@@ -72,13 +72,13 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4 py-12">
       <section className="w-full max-w-sm overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-        <div className="relative h-48 w-full bg-zinc-100">
+        <div className="relative h-40 w-full bg-zinc-100">
           <Image
             src="/images/Home.jpg"
             alt="MagRicambi"
             fill
             priority
-            className="object-contain"
+            className="object-cover"
             sizes="(max-width: 640px) 100vw, 384px"
           />
         </div>
@@ -98,12 +98,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           ) : null}
 
           <form action={login} className="space-y-4">
-            <input
-              type="hidden"
-              name="callbackUrl"
-              value={params?.callbackUrl ?? "/"}
-            />
-
             <label className="block">
               <span className="text-sm font-medium text-zinc-700">Utente o email</span>
               <input
