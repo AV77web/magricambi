@@ -1,15 +1,33 @@
-export default function MarketingLayout({
-    children,
+import { redirect } from "next/navigation";
 
+import { auth } from "@/src/auth";
+import SignOutButton from "@/src/components/auth/SignOutButton";
+
+export default async function ManagementLayout({
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <div>
-            <p className="bg-violet-700 text-white w-full text-center py-2">
-                Sono del layout (marketing)
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  return (
+    <div>
+      <header className="border-b border-zinc-200 bg-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <div>
+            <p className="text-sm font-medium text-zinc-500">Area gestionale</p>
+            <p className="text-base font-semibold text-zinc-950">
+              {session.user.utente}
             </p>
-            <main>{children}</main>
+          </div>
+          <SignOutButton />
         </div>
-    );
+      </header>
+      <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+    </div>
+  );
 }
