@@ -34,27 +34,37 @@ function readNumberEnv(name: string, fallback: number): number {
   return value;
 }
 
-const poolConfig: PoolOptions = {
-  host: readEnv("MYSQL_HOST", "127.0.0.1"),
-  port: readNumberEnv("MYSQL_PORT", 3306),
-  user: readEnv("MYSQL_USER"),
-  password: readEnv("MYSQL_PASSWORD"),
-  database: readEnv("MYSQL_DATABASE"),
-  waitForConnections: true,
-  connectionLimit: readNumberEnv("MYSQL_CONNECTION_LIMIT", 10),
-  queueLimit: 0,
-  namedPlaceholders: true,
-  timezone: "Z",
-};
-
-export const db = globalThis.magRicambiMysqlPool ?? mysql.createPool(poolConfig);
-
-if (process.env.NODE_ENV !== "production") {
-  globalThis.magRicambiMysqlPool = db;
+function createPoolConfig(): PoolOptions {
+  return {
+    host: readEnv("MYSQL_HOST", "127.0.0.1"),
+    port: readNumberEnv("MYSQL_PORT", 3306),
+    user: readEnv("MYSQL_USER"),
+    password: readEnv("MYSQL_PASSWORD"),
+    database: readEnv("MYSQL_DATABASE"),
+    waitForConnections: true,
+    connectionLimit: readNumberEnv("MYSQL_CONNECTION_LIMIT", 10),
+    queueLimit: 0,
+    namedPlaceholders: true,
+    timezone: "Z",
+  };
 }
 
+function getPool(): Pool {
+  if (!globalThis.magRicambiMysqlPool) {
+    globalThis.magRicambiMysqlPool = mysql.createPool(createPoolConfig());
+  }
+
+  return globalThis.magRicambiMysqlPool;
+}
+
+export const db = new Proxy({} as Pool, {
+  get(_target, property, receiver) {
+    return Reflect.get(getPool(), property, receiver);
+  },
+});
+
 export async function getDbConnection(): Promise<PoolConnection> {
-  return db.getConnection();
+  return getPool().getConnection();
 }
 
 export async function testDbConnection(): Promise<void> {
